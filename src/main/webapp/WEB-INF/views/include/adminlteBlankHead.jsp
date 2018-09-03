@@ -3,15 +3,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="${ctxStatic}/SuperUI/ui/global/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-<link href="${ctxStatic}/SuperUI/ui/global/font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link href="${ctxStatic}/SuperUI/adminlte/dist/css/AdminLTE.min.css" rel="stylesheet" />
-<link href="${ctxStatic}/SuperUI/adminlte/dist/css/skins/_all-skins.css" rel="stylesheet" />
+<link href="/static/SuperUI/ui/global/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="/static/SuperUI/ui/global/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href="/static/SuperUI/adminlte/dist/css/AdminLTE.min.css" rel="stylesheet" />
+<link href="/static/SuperUI/adminlte/dist/css/skins/_all-skins.css" rel="stylesheet" />
 
-<link href="${ctxStatic}/SuperUI/min/css/supershopui.common.min.css" rel="stylesheet" />
-<link href="${ctxStatic}/modules/common/css/app.min.css" rel="stylesheet" />
+<link href="/static/SuperUI/min/css/supershopui.common.min.css" rel="stylesheet" />
+<link href="/static/modules/common/css/app.min.css" rel="stylesheet" />
 
-<link href="${ctxStatic}/iview/styles/iview.css" rel="stylesheet" />
+<link href="/static/iview/styles/iview.css" rel="stylesheet" />
 
 <style>
     th, td {
