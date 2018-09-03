@@ -35,22 +35,22 @@
             </bean>
             <!-- 使用XML格式输出数据 -->
             <!--<bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">-->
-                <!--<constructor-arg>-->
-                    <!--<bean class="org.springframework.oxm.xstream.XStreamMarshaller">-->
-                        <!--<property name="streamDriver">-->
-                            <!--<bean class="com.thoughtworks.xstream.io.xml.StaxDriver"/>-->
-                        <!--</property>-->
-                        <!--<property name="annotatedClasses">-->
-                            <!--<list>-->
-                                <!--<value>com.glf.jxframe.common.persistence.BaseEntity</value>-->
-                                <!--<value>com.glf.jxframe.common.supcan.treelist.TreeList</value>-->
-                                <!--<value>com.glf.jxframe.common.supcan.treelist.cols.Col</value>-->
-                                <!--<value>com.glf.jxframe.common.supcan.treelist.cols.Group</value>-->
-                            <!--</list>-->
-                        <!--</property>-->
-                    <!--</bean>-->
-                <!--</constructor-arg>-->
-                <!--<property name="supportedMediaTypes" value="application/xml"></property>-->
+            <!--<constructor-arg>-->
+            <!--<bean class="org.springframework.oxm.xstream.XStreamMarshaller">-->
+            <!--<property name="streamDriver">-->
+            <!--<bean class="com.thoughtworks.xstream.io.xml.StaxDriver"/>-->
+            <!--</property>-->
+            <!--<property name="annotatedClasses">-->
+            <!--<list>-->
+            <!--<value>com.glf.jxframe.common.persistence.BaseEntity</value>-->
+            <!--<value>com.glf.jxframe.common.supcan.treelist.TreeList</value>-->
+            <!--<value>com.glf.jxframe.common.supcan.treelist.cols.Col</value>-->
+            <!--<value>com.glf.jxframe.common.supcan.treelist.cols.Group</value>-->
+            <!--</list>-->
+            <!--</property>-->
+            <!--</bean>-->
+            <!--</constructor-arg>-->
+            <!--<property name="supportedMediaTypes" value="application/xml"></property>-->
             <!--</bean>-->
         </mvc:message-converters>
     </mvc:annotation-driven>
