@@ -9,11 +9,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 
+
 <html>
 <head>
     <%@include file="/WEB-INF/views/include/adminlteBlankHead.jsp" %>
     <%@include file="/WEB-INF/views/include/adminlteBlankScript.jsp" %>
-
     <title>$Title$</title>
 
 </head>
