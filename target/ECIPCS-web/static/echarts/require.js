@@ -399,7 +399,7 @@ var requirejs, require, define;
         }
 
         /**
-         * Creates a module mapping that includes plugin prefix, module
+         * Creates a module mapper that includes plugin prefix, module
          * name, and path. If parentModuleMap is provided it will
          * also normalize the name via require.normalize()
          *
