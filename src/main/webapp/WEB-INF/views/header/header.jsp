@@ -13,27 +13,50 @@
     <%@include file="/WEB-INF/views/include/adminlteBlankHead.jsp" %>
 </head>
 <body>
-
+<style>
+    .layout{
+        border: 1px solid #d7dde4;
+        background: #f5f7f9;
+        position: relative;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+</style>
 <div id="app">
+
     <div class="layout">
-        <i-layout>
-            <i-header>
-                <h1>工程认证指标点计算系统</h1>
+        <Layout>
+            <i-header theme="theme2"  >
+                <h1 style="color: wheat">工程认证指标点计算系统</h1>
             </i-header>
-            <i-layout>
-                <i-sider hide-trigger :style="{background: '#fff'}">
-                    <i-menu active-name="1-2" theme="light" width="auto" :open-names="['1']">
-                        <sub-menu name="1">
+            <Layout>
+                <Sider hide-trigger >
+                    <i-menu active-name="1-2" theme="dark" width="auto" :open-names="['1']">
+                        <Submenu name="1">
+                            <template slot="title">
                             <Icon type="ios-navigate"></Icon>
                                 Item 1
+                            </template>
                             <menu-item name="1-1">Option 1</menu-item>
-                            <menu-item  name="1-2">Option 2</menu-item >
+                            <menu-item  name="1-2">Option 2</menu-item>
                             <menu-item name="1-3">Option 3</menu-item>
-                        </sub-menu>
+                        </Submenu>
                     </i-menu>
-                </i-sider>
-            </i-layout>
-        </i-layout>
+                </Sider>
+                <Layout :style="{padding: '0 24px 24px'}">
+
+                    <Breadcrumb :style="{margin:'24px 0'}">
+                        <breacrum-item>Home</breacrum-item>
+                        <breacrum-item>Components</breacrum-item>
+                        <breacrum-item>Layout</breacrum-item>
+                    </Breadcrumb>
+                    <i-content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
+                        Content
+                    </i-content>
+
+                </Layout>
+            </Layout>
+        </Layout>
 
     </div>
 </div>
