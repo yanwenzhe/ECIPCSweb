@@ -85,7 +85,7 @@ public class Writegradesheet {
         }
 
         //将workbook写入系统
-        FileOutputStream out = new FileOutputStream(new File("XXX评价表.xlsx"));
+        FileOutputStream out = new FileOutputStream(new File("excel\\XXX评价表.xlsx"));
         workbook.write(out);
         out.close();
         System.out.println("写入完成");

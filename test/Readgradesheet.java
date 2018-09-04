@@ -9,7 +9,7 @@ public class Readgradesheet {
     static XSSFRow row;
     public static void main(String[] args) throws Exception
     {
-        FileInputStream fileInputStream = new FileInputStream(new File("原始成绩.xlsx"));
+        FileInputStream fileInputStream = new FileInputStream(new File("excel\\原始成绩.xlsx"));
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
 
         //读取第一张sheet
