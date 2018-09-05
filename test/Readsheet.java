@@ -25,68 +25,48 @@ public class Readsheet {
     public static void main(String[] args) throws Exception
     {
         /**
-         * 读取insert Course语句部分
+         * Course表数据插入
          */
-//        String description = "";
-//        String year = new String(new SimpleDateFormat("yyyy").format(new Date()));
-//
-//        List<String> courses = new ArrayList<String>();
-//        courses = getAllCourse();
-//        for (String coursename:courses
-//             ) {
-//            String id = GuidUtil.getGuid();
-//            Course course = new Course(id,coursename,description,year);
-//            System.out.println("INSERT INTO Course(id,name,description,year) VALUES(\"" + id + "\",\"" + coursename + "\",\"" + description + "\",\"" + year + "\");");
-//            //添加数据到数据库
-//        }
 
+        //insertCourse("excel\\2009~2016学年-课程支撑矩阵.xlsx");
+        //insertCourse("excel\\2016~2018学年-课程支撑矩阵.xlsx");
 
         /**
          * IndexPoint表数据的插入
          */
-       // insertIndexPoint();
+
+        //insertIndexPoint("excel\\2009~2016学年-课程支撑矩阵.xlsx");
+       // insertIndexPoint("excel\\2016~2018学年-课程支撑矩阵.xlsx");
 
         /**
          *RelatedIndexPointCourse表数据的插入
          */
-        insertIndexPointCourse();
+
+       // insertIndexPoint_Course("excel\\2009~2016学年-课程支撑矩阵.xlsx");
+       // insertIndexPoint_Course("excel\\2016~2018学年-课程支撑矩阵.xlsx");
 
 
         /**
          * Student 和 StudentScore表的插入
          */
-       // insertStudent_Score(1);
-       // insertStudent_Score(3);
 
-        //INSERT INTO StudentScore SELECT "123",C.id,S.id,I.id,"软件系统",4.5,5 FROM Course C,Student S,IndexPoint I WHERE C.name="互联网应用开发基础训练" and S.schoolNumber="20091826" and I.point="1.1";
+        insertStudent_Score("excel\\2009~2011学年-应用系统开发实践.xlsx");
 
     }
 
-    public static void insertStudent_Score(int index) throws Exception
+    public static void insertCourse(String pathname) throws Exception
     {
-        FileInputStream fileInputStream = new FileInputStream(new File("excel\\《应用系统开发实践》2012~2016学年.xlsx"));
+        FileInputStream fileInputStream = new FileInputStream(new File(pathname));
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
-        XSSFSheet sheet = workbook.getSheetAt(index);
+        XSSFSheet sheet = workbook.getSheetAt(0);
 
-        for(int i=4;i<sheet.getLastRowNum();i++)
-        {
-            row = sheet.getRow(i);
-            String id = GuidUtil.getGuid();
-            System.out.println("INSERT IGNORE INTO Student VALUES(\""+id+"\",\""+row.getCell(0).getStringCellValue()+"\",\""+row.getCell(1).getStringCellValue()+"\",\""+row.getCell(2).getStringCellValue()+"\");");
-        }
-
-
-
-    }
-
-
-    public static List<String> getAllCourse() throws Exception
-    {
         List<String> courses = new ArrayList<>();
-
-        FileInputStream fileInputStream = new FileInputStream(new File("excel\\样表-xxxx~xxxx学年课程支撑矩阵.xlsx"));
-        XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
-        XSSFSheet sheet = workbook.getSheetAt(1);
+        //年份
+        List<String> years = new ArrayList<>();
+        years.add(pathname.substring(6,10));
+        years.add(pathname.substring(11,15));
+        int yearStart = Integer.parseInt(years.get(0));
+        int yearEnd = Integer.parseInt(years.get(1));
 
         //读取第一列的所有课程,从第2行开始读，不空则为一门课程
         for (int i= 1 ; i <= sheet.getLastRowNum() - 4; i++)
@@ -104,22 +84,36 @@ public class Readsheet {
                     continue;
             }
         }
-        return courses;
+
+        //课程循环
+        for (String name:courses
+             ) {
+            //年份循环
+            for(int y=yearStart;y<yearEnd;y++) {
+                String id = GuidUtil.getGuid();
+                System.out.println("INSERT INTO Course(id,name,description,year) VALUES(\"" + id + "\",\"" + name + "\",\"\",\"" + y + "\");");
+            }
+        }
     }
 
-    public static void insertIndexPoint() throws Exception
+    public static void insertIndexPoint(String pathname) throws Exception
     {
 
-        FileInputStream fileInputStream = new FileInputStream(new File("excel\\样表-xxxx~xxxx学年课程支撑矩阵.xlsx"));
+        FileInputStream fileInputStream = new FileInputStream(new File(pathname));
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
-        XSSFSheet sheet = workbook.getSheetAt(1);
+        XSSFSheet sheet = workbook.getSheetAt(0);
 
-        //表格第5行是指标点
-        row = sheet.getRow(4);
+        //表格第4行是指标点
+        row = sheet.getRow(3);
 
-        String yearStart = "2017";
-        String yearEnd = "2019";
-        for(int i = 0; i < row.getLastCellNum() - 4; i++)
+        //年份
+        List<String> years = new ArrayList<>();
+        years.add(pathname.substring(6,10));
+        years.add(pathname.substring(11,15));
+        int yearStart = Integer.parseInt(years.get(0));
+        int yearEnd = Integer.parseInt(years.get(1));
+
+        for(int i = 1; i < row.getLastCellNum() - 4; i++)
         {
             String id = GuidUtil.getGuid();
 
@@ -128,7 +122,7 @@ public class Readsheet {
             {
                 String delimeter = " ";//分隔符是空格
                 String[] sArray = cell.getStringCellValue().split(delimeter);
-                // System.out.println(sArray[0]);
+                //System.out.println(sArray[0]);
                 //System.out.println(sArray[1]);
 
                 double index = Double.parseDouble(sArray[0]);
@@ -144,17 +138,16 @@ public class Readsheet {
         }
     }
 
-    public static void insertIndexPointCourse() throws Exception
+    public static void insertIndexPoint_Course(String pathname) throws Exception
     {
-        FileInputStream fileInputStream = new FileInputStream(new File("excel\\课程支撑矩阵1.xlsx"));
+        FileInputStream fileInputStream = new FileInputStream(new File(pathname));
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
-        XSSFSheet sheet = workbook.getSheetAt(1); //程度矩阵
-        XSSFSheet sheet1 = workbook.getSheetAt(0); //系数矩阵
+        XSSFSheet sheet = workbook.getSheetAt(0); //程度矩阵
+        XSSFSheet sheet1 = workbook.getSheetAt(1); //系数矩阵
 
-        //表格第5行是指标点
-        row = sheet.getRow(4);
-        //指标点序列
-        List<String> point = new ArrayList<String>();
+        //表格第4行是指标点
+        row = sheet.getRow(3);        //指标点序列
+        List<String> point = new ArrayList<>();
         for(int i = 0; i < row.getLastCellNum() - 4; i++)
         {
             Cell cell = row.getCell(i);
@@ -162,13 +155,20 @@ public class Readsheet {
             String[] sArray = cell.getStringCellValue().split(delimeter);
             point.add(sArray[0]);
         }
-        for (int i = 0; i < point.size();i++
-             ) {
-            System.out.println(point.get(i));
-        }
+//        for (int i = 0; i < point.size();i++
+//             ) {
+//            System.out.println(point.get(i));
+//        }
 
-        int add =0;
-        for (int i =  5 ; i <= sheet.getLastRowNum() - 4;i++)
+        //年份
+        List<String> years = new ArrayList<>();
+        years.add(pathname.substring(6,10));
+        years.add(pathname.substring(11,15));
+        int yearStart = Integer.parseInt(years.get(0));
+        int yearEnd = Integer.parseInt(years.get(1));
+
+        int add = 0;
+        for (int i =  4 ; i <= sheet.getLastRowNum() - 4;i++)
         {
             row = sheet.getRow(i); //程度
             row1 = sheet1.getRow(i+add); //系数
@@ -182,8 +182,10 @@ public class Readsheet {
 
                 if(cell.getCellType() != Cell.CELL_TYPE_BLANK)
                 {
-                    String id = GuidUtil.getGuid();
-                    System.out.println("INSERT INTO RelatedIndexPointCourse(id,indexPointId,courseId,supportDegree,supportFactor) SELECT\""+id+"\",c.id,i.id,\""+cell.getStringCellValue()+"\","+cell1.getNumericCellValue()+" FROM Course c,IndexPoint i WHERE c.name=\""+row.getCell(0).getStringCellValue()+"\" and i.point=\""+point.get(j)+"\";");
+                    for(int y=yearStart;y<yearEnd;y++) {
+                        String id = GuidUtil.getGuid();
+                        System.out.println("INSERT INTO RelatedIndexPointCourse(id,indexPointId,courseId,supportFactor,supportDegree) SELECT\"" + id + "\",i.id,c.id," + cell1.getNumericCellValue() + ",\"" + cell.getStringCellValue() + "\" FROM Course c,IndexPoint i WHERE c.name=\"" + row.getCell(0).getStringCellValue() + "\" and c.year=\""+ y + "\" and i.point=\"" + point.get(j) + "\" and i.yearStart<=\""+y+"\" and i.yearEnd>=\""+y+"\";");
+                    }
                 }
             }
 
@@ -195,4 +197,61 @@ public class Readsheet {
         }
 
     }
+
+    public static void insertStudent_Score(String pathname) throws Exception
+    {
+        FileInputStream fileInputStream = new FileInputStream(new File(pathname));
+        XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+
+        //年份
+        List<String> years = new ArrayList<>();
+        years.add(pathname.substring(6,10));
+        years.add(pathname.substring(11,15));
+        int yearStart = Integer.parseInt(years.get(0));
+        int yearEnd = Integer.parseInt(years.get(1));
+
+        for(int y=yearStart,k=1;y<yearEnd;y++,k+=2) {
+            XSSFSheet sheet = workbook.getSheetAt(k);
+
+            //获取列名
+            row1 = sheet.getRow(0);
+            List<String> columName = new ArrayList<>();
+            String copy="";
+            columName.add("");
+            columName.add("");
+            columName.add("");
+            for (int i = 3;i<row1.getLastCellNum();i++)
+            {
+                cell1 = row1.getCell(i);
+                if (cell1.getCellType() == Cell.CELL_TYPE_BLANK)
+                {
+                    columName.add(copy);
+                }
+                else
+                {
+                    copy=cell1.getStringCellValue();
+                    columName.add(copy);
+                }
+            }
+
+//            for (String n:columName
+//                 ) {
+//                System.out.println(n);
+//            }
+
+            for (int i = 4; i < sheet.getLastRowNum(); i++) {
+
+                row = sheet.getRow(i);
+                String id = GuidUtil.getGuid();    //随机生成Student表id
+                System.out.println("INSERT IGNORE INTO Student VALUES(\"" + id + "\",\"" + row.getCell(0).getStringCellValue() + "\",\"" + row.getCell(1).getStringCellValue() + "\",\"" + row.getCell(2).getStringCellValue() + "\");");
+
+                for (int j= 3;j<row.getLastCellNum();j++) {
+                    cell = row.getCell(j);
+                    String id1 = GuidUtil.getGuid();    //再次随机生成StudentScore表id
+                 System.out.println("INSERT INTO StudentScore SELECT\"" + id1 + "\",C.id,\"" + id + "\",I.id,\"" + columName.get(j) + "\"," +cell.getNumericCellValue()+","+sheet.getRow(2).getCell(j).getNumericCellValue()+" FROM Course C, IndexPoint I WHERE C.name=\"应用系统开发实践\" and C.year=\""+y+"\" and I.point=\""+sheet.getRow(1).getCell(j).getNumericCellValue()+"\" and I.yearStart<=\""+y+"\" and I.yearEnd>=\""+y+"\";");
+                }
+            }
+        }
+    }
+
 }
