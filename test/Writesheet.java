@@ -9,7 +9,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class Writegradesheet {
+public class Writesheet {
     public static void main(String[] args) throws Exception
     {
         //创建一个空的excel
