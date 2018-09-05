@@ -78,16 +78,16 @@
                                 <Icon type="ios-navigate"></Icon>
                                 原始成绩
                             </template>
-                            <menu-item name="1-1"><a href="/header/test">查看课程</a></menu-item>
-                            <menu-item  name="1-2">成绩录入</menu-item>
+                            <menu-item name="1-1"><a href="/teacher/courseView">查看课程</a></menu-item>
+                            <menu-item  name="1-2"><a href="/teacher/gradeReview">成绩查看</a></menu-item>
                         </Submenu>
                         <Submenu name="2">
                             <template slot="title">
                                 <Icon type="ios-navigate"></Icon>
                                 评价与改进
                             </template>
-                            <menu-item name="2-1">评价结果</menu-item>
-                            <menu-item  name="2-2">改进记录管理</menu-item>
+                            <menu-item name="2-1"><a href="/teacher/result">评价结果</a></menu-item>
+                            <menu-item  name="2-2"><a href="/teacher/improvedRecord">改进记录管理</a></menu-item>
                         </Submenu>
                     </i-menu>
                 </Sider>

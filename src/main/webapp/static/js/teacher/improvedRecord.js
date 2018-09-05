@@ -27,16 +27,17 @@ var test = new Vue({
             number: '2016-05-03',
             subject: '王小虎',
             date: '上海',
-            yesOrNo: '普陀区'
+            yesOrNo: '否'
         }, {
             number: '2016-05-03',
             subject: '王小虎',
             date: '上海',
-            yesOrNo: '普陀区'
+            yesOrNo: '否'
         }]
     },
     methods: {
         handleEdit(index, row) {
+            window.location.href="/teacher/improvedAnalysis";
             console.log(index, row);
         },
         handleDetails(index, row) {

@@ -72,30 +72,29 @@
             </i-header>
             <Layout>
                 <Sider hide-trigger :style="{background:'#CCCCFF'}">
-                    <i-menu active-name="1-1" theme="blue" width="auto" :open-names="['1']" :style="{background:'#CCCCFF'}">
+                    <i-menu active-name="1-2" theme="blue" width="auto" :open-names="['2']" :style="{background:'#CCCCFF'}">
                         <Submenu name="1">
                             <template slot="title">
                                 <Icon type="ios-navigate"></Icon>
                                 原始成绩
                             </template>
-                            <menu-item name="1-1"><a href="/header/test">查看课程</a></menu-item>
-                            <menu-item  name="1-2">成绩录入</menu-item>
+                            <menu-item name="1-1"><a href="/teacher/courseView">查看课程</a></menu-item>
+                            <menu-item  name="1-2"><a href="/teacher/gradeReview">成绩查看</a></menu-item>
                         </Submenu>
                         <Submenu name="2">
                             <template slot="title">
                                 <Icon type="ios-navigate"></Icon>
                                 评价与改进
                             </template>
-                            <menu-item name="2-1">评价结果</menu-item>
-                            <menu-item  name="2-2">改进记录管理</menu-item>
+                            <menu-item name="2-1"><a href="/teacher/result">评价结果</a></menu-item>
+                            <menu-item  name="2-2"><a href="/teacher/improvedRecord">改进记录管理</a></menu-item>
                         </Submenu>
-                    </i-menu>
-                </Sider>
+                    </i-menu>                </Sider>
                 <Layout :style="{padding: '0 24px 24px'}">
 
                     <Breadcrumb :style="{margin:'24px 0'}">
-                        <breacrum-item>原始成绩</breacrum-item>&nbsp;/&nbsp;
-                        <breacrum-item>查看课程</breacrum-item>
+                        <breacrum-item>评价与改进</breacrum-item>&nbsp;/&nbsp;
+                        <breacrum-item>改进记录管理</breacrum-item>
                     </Breadcrumb>
                     <i-content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
 
