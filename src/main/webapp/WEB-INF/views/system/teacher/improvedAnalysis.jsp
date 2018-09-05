@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: 27758_000
-  Date: 2018/9/4
-  Time: 19:12
+  Date: 2018/9/5
+  Time: 19:06
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -53,6 +53,9 @@
         .el-container:nth-child(7) .el-aside {
             line-height: 320px;
         }
+        .el-tag{
+            background-color: #ffffff !important;
+        }
     </style>
     <title>课程查看</title>
 </head>
@@ -101,44 +104,74 @@
 
                         <%--这里面写内容，侧边栏要改的东西有active-name和<a>标签条跳转--%>
                         <el-container>
-                            <el-header style="text-align: right">
-                                <p style="font-size: 15px;display: inline-block">年份：</p>
-                                <div style="display: inline-block">
-                                    <el-date-picker
-                                            v-model="value"
-                                            type="year"
-                                            placeholder="选择年">
-                                    </el-date-picker>
-                                </div>
-                                <p style="font-size: 15px;display: inline-block">科目：</p>
-                                <div style="display: inline-block">
-                                    <el-select v-model="value1" placeholder="请选择">
-                                        <el-option
-                                                v-for="item in options"
-                                                :key="item.value"
-                                                :label="item.label"
-                                                :value="item.value">
-                                        </el-option>
-                                    </el-select>
-                                </div>
+                            <el-header style="text-align: left">
+
+                                <el-tag >{{tag1}}</el-tag>
+                                &nbsp;&nbsp;
+                                <el-tag >{{tag2}}</el-tag>
+
                             </el-header>
                             <el-main style="background-color: #B3C0D1;margin-top: 20px" >
 
                                 <div >
                                     <template>
                                         <el-table
-                                                :data="data_list"
+                                                :data="tableData3"
                                         <%--style="width: 100%;height: 100%;"--%>
                                                 stripe="true"
                                                 border
                                         >
-                                            <el-table-column  :label="date" align="center" v-for="(date, key) in header">
-                                                <template scope="scope">
-                                                    {{data_list[scope.$index][key]}}
-                                                </template>
+                                            <el-table-column
+                                                    prop="number"
+                                                    align="center"
+                                                    label="编号">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="demand"
+                                                    align="center"
+                                                    label="毕业要求">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="indicatorPoint"
+                                                    align="center"
+                                                    label="指标点">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="tcontent"
+                                                    align="center"
+                                                    label="教学内容">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="acontent"
+                                                    align="center"
+                                                    label="考核内容">
                                             </el-table-column>
                                         </el-table>
                                     </template>
+                                </div>
+
+                                <div style="margin-top: 20px;width: 900px; background-color: #a6a8b1;padding-right: 50px;padding-top: 30px;padding-bottom: 10px;">
+                                    <el-form ref="form" :model="form" label-width="80px">
+                                        <el-form-item label="上一届教学问题" >
+                                            <el-input type="textarea" v-model="form.desc1" style="margin-top: 10px"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="上一届改进措施">
+                                            <el-input type="textarea" v-model="form.desc2" style="margin-top: 10px" ></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="效果及评价">
+                                            <el-input type="textarea" v-model="form.desc3" style="margin-top: 10px"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="本届新发现的问题">
+                                            <el-input type="textarea" v-model="form.desc4" style="margin-top: 10px"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="采取改进措施">
+                                            <el-input type="textarea" v-model="form.desc5" style="margin-top: 10px"></el-input>
+                                        </el-form-item>
+                                        <el-form-item>
+                                            <el-button type="primary" @click="onSubmit" style="width: 100px">创建</el-button>
+                                            <el-button type="warning" style="margin-left: 100px;width: 100px">返回</el-button>
+                                        </el-form-item>
+                                    </el-form>
                                 </div>
 
                             </el-main>
@@ -154,7 +187,7 @@
 </div>
 
 
-<script src="/static/js/teacher/result.js"></script>
+<script src="/static/js/teacher/improvedAnalysis.js"></script>
 
 </body>
 </html>
