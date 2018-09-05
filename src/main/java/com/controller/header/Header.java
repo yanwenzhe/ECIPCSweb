@@ -10,4 +10,9 @@ public class Header {
     public String ui(){
         return "/header/header";
     }
+
+    @RequestMapping("/test")
+    public String test(){
+        return "/header/headerTest";
+    }
 }
