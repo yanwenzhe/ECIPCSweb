@@ -49,14 +49,14 @@ public class Readsheet {
         /**
          *RelatedIndexPointCourse表数据的插入
          */
-        //insertIndexPointCourse();
+        insertIndexPointCourse();
 
 
         /**
          * Student 和 StudentScore表的插入
          */
-        insertStudent_Score(1);
-        insertStudent_Score(3);
+       // insertStudent_Score(1);
+       // insertStudent_Score(3);
 
         //INSERT INTO StudentScore SELECT "123",C.id,S.id,I.id,"软件系统",4.5,5 FROM Course C,Student S,IndexPoint I WHERE C.name="互联网应用开发基础训练" and S.schoolNumber="20091826" and I.point="1.1";
 
@@ -75,6 +75,8 @@ public class Readsheet {
             System.out.println("INSERT IGNORE INTO Student VALUES(\""+id+"\",\""+row.getCell(0).getStringCellValue()+"\",\""+row.getCell(1).getStringCellValue()+"\",\""+row.getCell(2).getStringCellValue()+"\");");
         }
 
+
+
     }
 
 
@@ -82,7 +84,7 @@ public class Readsheet {
     {
         List<String> courses = new ArrayList<>();
 
-        FileInputStream fileInputStream = new FileInputStream(new File("excel\\课程支撑矩阵.xlsx"));
+        FileInputStream fileInputStream = new FileInputStream(new File("excel\\样表-xxxx~xxxx学年课程支撑矩阵.xlsx"));
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet sheet = workbook.getSheetAt(1);
 
@@ -108,7 +110,7 @@ public class Readsheet {
     public static void insertIndexPoint() throws Exception
     {
 
-        FileInputStream fileInputStream = new FileInputStream(new File("excel\\课程支撑矩阵.xlsx"));
+        FileInputStream fileInputStream = new FileInputStream(new File("excel\\样表-xxxx~xxxx学年课程支撑矩阵.xlsx"));
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet sheet = workbook.getSheetAt(1);
 
@@ -144,10 +146,10 @@ public class Readsheet {
 
     public static void insertIndexPointCourse() throws Exception
     {
-        FileInputStream fileInputStream = new FileInputStream(new File("excel\\课程支撑矩阵.xlsx"));
+        FileInputStream fileInputStream = new FileInputStream(new File("excel\\课程支撑矩阵1.xlsx"));
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet sheet = workbook.getSheetAt(1); //程度矩阵
-        XSSFSheet sheet1 = workbook.getSheetAt(2); //系数矩阵
+        XSSFSheet sheet1 = workbook.getSheetAt(0); //系数矩阵
 
         //表格第5行是指标点
         row = sheet.getRow(4);
@@ -160,13 +162,13 @@ public class Readsheet {
             String[] sArray = cell.getStringCellValue().split(delimeter);
             point.add(sArray[0]);
         }
-//        for (int i = 0; i < point.size();i++
-//             ) {
-//            System.out.println(point.get(i));
-//        }
+        for (int i = 0; i < point.size();i++
+             ) {
+            System.out.println(point.get(i));
+        }
 
         int add =0;
-        for (int i =  5 ; i < sheet.getLastRowNum() - 4;i++)
+        for (int i =  5 ; i <= sheet.getLastRowNum() - 4;i++)
         {
             row = sheet.getRow(i); //程度
             row1 = sheet1.getRow(i+add); //系数
