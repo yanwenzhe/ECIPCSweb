@@ -54,7 +54,7 @@
             line-height: 320px;
         }
     </style>
-    <title>课程查看</title>
+    <title>改进记录结果</title>
 </head>
 <body>
 
@@ -72,7 +72,7 @@
             </i-header>
             <Layout>
                 <Sider hide-trigger :style="{background:'#CCCCFF'}">
-                    <i-menu active-name="2-1" theme="blue" width="auto" :open-names="['2']" :style="{background:'#CCCCFF'}">
+                    <i-menu active-name="1-2" theme="blue" width="auto" :open-names="['2']" :style="{background:'#CCCCFF'}">
                         <Submenu name="1">
                             <template slot="title">
                                 <Icon type="ios-navigate"></Icon>
@@ -94,7 +94,7 @@
 
                     <Breadcrumb :style="{margin:'24px 0'}">
                         <breacrum-item>评价与改进</breacrum-item>&nbsp;/&nbsp;
-                        <breacrum-item>评价结果</breacrum-item>
+                        <breacrum-item>改进记录管理</breacrum-item>
                     </Breadcrumb>
                     <i-content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
 
@@ -126,14 +126,40 @@
                                 <div >
                                     <template>
                                         <el-table
-                                                :data="data_list"
+                                                :data="tableData3"
                                         <%--style="width: 100%;height: 100%;"--%>
                                                 stripe="true"
                                                 border
                                         >
-                                            <el-table-column  :label="date" align="center" v-for="(date, key) in header">
-                                                <template scope="scope">
-                                                    {{data_list[scope.$index][key]}}
+                                            <el-table-column
+                                                    prop="number"
+                                                    align="center"
+                                                    label="编号">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="subject"
+                                                    align="center"
+                                                    label="科目">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="date"
+                                                    align="center"
+                                                    label="年份">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="yesOrNo"
+                                                    align="center"
+                                                    label="是否已填写">
+                                            </el-table-column>
+                                            <el-table-column label="操作"
+                                                             align="center">
+                                                <template slot-scope="scope">
+                                                    <el-button
+                                                        size="mini"
+                                                        @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                                                    <el-button
+                                                            size="mini"
+                                                            @click="handleDetails(scope.$index, scope.row)">详情</el-button>
                                                 </template>
                                             </el-table-column>
                                         </el-table>
@@ -153,7 +179,7 @@
 </div>
 
 
-<script src="/static/js/teacher/result.js"></script>
+<script src="/static/js/teacher/improvedRecord.js"></script>
 
 </body>
 </html>

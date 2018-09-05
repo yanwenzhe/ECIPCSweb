@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: 27758_000
-  Date: 2018/9/4
-  Time: 19:12
+  Date: 2018/9/5
+  Time: 16:05
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -54,7 +54,7 @@
             line-height: 320px;
         }
     </style>
-    <title>课程查看</title>
+    <title>成绩查看</title>
 </head>
 <body>
 
@@ -72,7 +72,7 @@
             </i-header>
             <Layout>
                 <Sider hide-trigger :style="{background:'#CCCCFF'}">
-                    <i-menu active-name="2-1" theme="blue" width="auto" :open-names="['2']" :style="{background:'#CCCCFF'}">
+                    <i-menu active-name="1-2" theme="blue" width="auto" :open-names="['1']" :style="{background:'#CCCCFF'}">
                         <Submenu name="1">
                             <template slot="title">
                                 <Icon type="ios-navigate"></Icon>
@@ -89,37 +89,49 @@
                             <menu-item name="2-1"><a href="/teacher/result">评价结果</a></menu-item>
                             <menu-item  name="2-2"><a href="/teacher/improvedRecord">改进记录管理</a></menu-item>
                         </Submenu>
-                    </i-menu>                </Sider>
+                    </i-menu>
+                </Sider>
                 <Layout :style="{padding: '0 24px 24px'}">
 
                     <Breadcrumb :style="{margin:'24px 0'}">
-                        <breacrum-item>评价与改进</breacrum-item>&nbsp;/&nbsp;
-                        <breacrum-item>评价结果</breacrum-item>
+                        <breacrum-item>原始成绩</breacrum-item>&nbsp;/&nbsp;
+                        <breacrum-item>成绩查看</breacrum-item>
                     </Breadcrumb>
                     <i-content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
 
                         <%--这里面写内容，侧边栏要改的东西有active-name和<a>标签条跳转--%>
                         <el-container>
                             <el-header style="text-align: right">
-                                <p style="font-size: 15px;display: inline-block">年份：</p>
-                                <div style="display: inline-block">
-                                    <el-date-picker
-                                            v-model="value"
-                                            type="year"
-                                            placeholder="选择年">
-                                    </el-date-picker>
-                                </div>
-                                <p style="font-size: 15px;display: inline-block">科目：</p>
-                                <div style="display: inline-block">
-                                    <el-select v-model="value1" placeholder="请选择">
-                                        <el-option
-                                                v-for="item in options"
-                                                :key="item.value"
-                                                :label="item.label"
-                                                :value="item.value">
-                                        </el-option>
-                                    </el-select>
-                                </div>
+                               <div style="margin-top: 10px">
+                                   <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                                       <el-form-item label="年份:">
+                                           <el-date-picker
+                                                   v-model="formInline.value"
+                                                   type="year"
+                                                   placeholder="选择年">
+                                           </el-date-picker>
+                                       </el-form-item>
+                                       <el-form-item label="科目:">
+                                           <el-select v-model="formInline.value1" placeholder="请选择">
+                                               <el-option
+                                                       v-for="item in formInline.options"
+                                                       :key="item.value"
+                                                       :label="item.label"
+                                                       :value="item.value">
+                                               </el-option>
+                                           </el-select>
+                                       </el-form-item>
+                                       <el-form-item label="学号">
+                                           <el-input v-model="formInline.number" placeholder="学号"></el-input>
+                                       </el-form-item>
+                                       <el-form-item label="姓名">
+                                           <el-input v-model="formInline.name" placeholder="姓名"></el-input>
+                                       </el-form-item>
+                                       <el-form-item>
+                                           <el-button type="primary" @click="onSubmit">查询</el-button>
+                                       </el-form-item>
+                                   </el-form>
+                               </div>
                             </el-header>
                             <el-main style="background-color: #B3C0D1;margin-top: 20px" >
 
@@ -140,6 +152,34 @@
                                     </template>
                                 </div>
 
+                                <div style="margin-top: 20px">
+                                    <template>
+                                        <el-table
+                                                :data="data_list2"
+                                        <%--style="width: 100%;height: 100%;"--%>
+                                                stripe="true"
+                                                border
+                                        >
+                                            <el-table-column  :label="date" align="center" v-for="(date, key) in header2">
+                                                <template scope="scope">
+                                                    {{data_list[scope.$index][key]}}
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column label="操作"
+                                                             align="center">
+                                                <template slot-scope="scope">
+                                                    <el-button
+                                                            size="mini"
+                                                            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                                                    <el-button
+                                                            size="mini"
+                                                            @click="handleDetails(scope.$index, scope.row)">详情</el-button>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                    </template>
+                                </div>
+
                             </el-main>
                         </el-container>
                     </i-content>
@@ -153,7 +193,7 @@
 </div>
 
 
-<script src="/static/js/teacher/result.js"></script>
+<script src="/static/js/teacher/gradeReview.js"></script>
 
 </body>
 </html>

@@ -18,17 +18,50 @@
 
 </head>
 <body>
+<style>
+    .blur {-webkit-filter: blur(4px);filter: blur(4px) ;width:100%;height:100%;position:absolute;z-index: -1;left:0px;
+        top:0px;}
+    .through {
+        background-color:#000000;  opacity:0.5; margin-left: 40%;width: 200px;height:135px;z-index:1;border-radius:15px;border:1px solid #000000;}
 
-<div class="row">
-    <div >
-        用户名：<input type="text">
+</style>
+<div style="width:100%;height:100%;" id="app">
+    <div style="height:30%"></div>
+    <div class="through">
+        <div style="margin-top: 20px;width:80%;margin-left:10%">
+            <i-input  placeholder="username" size="small"></i-input>
+
+        </div>
+        <div style="margin-top: 8px;width:80%;margin-left:10%">
+            <i-input type="password" placeholder="password" size="small"></i-input>
+        </div>
+        <div style="margin-top: 13px;width:80%;margin-left:10%">
+            <i-button slot="append" type="primary" size="small" ghost long @click="load()">登 录</i-button>
+        </div>
     </div>
-    <div >
-        密码：<input type="password">
-    </div>
-    <div >
-        <button>登录</button>
-    </div>
+    <img src="/static/image/BIT.jpg" class="blur">
+
 </div>
+
+
+<script>
+    var vue=new Vue({
+        el:'#app',
+        data:{
+
+            username:'',
+            password:''
+        },
+        methods:{
+            load(){
+                window.location.href="/teacher/courseView";
+            }
+
+        }
+
+    });
+
+</script>
 </body>
+
 </html>
