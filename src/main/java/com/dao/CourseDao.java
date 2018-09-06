@@ -13,8 +13,10 @@ public interface CourseDao {
 
 
     /**
-     * 更新课程
+     * 更新课程,年份不能更改
      * @param course
      */
     public void updateCourse(Course course);
+
+
 }

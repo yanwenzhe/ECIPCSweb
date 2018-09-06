@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.RelatedIndexPointCourseTeacherDao">
+
+    <insert id="addRelatedIndexPointCourseTeacher" parameterType="com.entity.RelatedIndexPointCourseTeacher">
+        INSERT INTO RelatedIndexPointCourseTeacher(id,indexPointId,courseId,teacherId,hasChosen,evaluteValue)
+        VALUES (#{id},#{indexPointId},#{courseId},#{teacherId},#{hasChosen},#{evaluteValue})
+    </insert>
+
+    <update id="updateRelatedIndexPointCourseTeacher" parameterType="com.entity.RelatedIndexPointCourseTeacher">
+        UPDATE RelatedIndexPointCourseTeacher SET hasChosen = #{hasChosen}
+        WHERE id = #{id}
+    </update>
+</mapper>

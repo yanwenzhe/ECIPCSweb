@@ -5,4 +5,13 @@
 
 <mapper namespace="com.dao.RelatedTeacherCourseDao">
 
+    <insert id="addRelatedTeacherCourse" parameterType="com.entity.RelatedTeacherCourse">
+        INSERT INTO RelatedTeacherCourse (id,teacherId,courseId,oldProblem,oldSuggestion,result,newProblem)
+        VALUES (#{id},#{teacherId},#{courseId},#{oldProblem},#{oldSuggestion},#{result},#{newProblem})
+    </insert>
+
+    <update id="updateRelatedTeacherCourse" parameterType="com.entity.RelatedTeacherCourse">
+        UPDATE RelatedTeacherCourse SET
+        WHERE id = #{id}
+    </update>
 </mapper>

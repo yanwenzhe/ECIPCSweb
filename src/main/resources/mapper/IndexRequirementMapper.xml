@@ -5,4 +5,8 @@
 
 <mapper namespace="com.dao.IndexRequirementDao">
 
+    <update id="updateIndexRequirement" parameterType="com.entity.IndexRequirement">
+        UPDATE  IndexRequirement SET description = #{description}
+        WHERE id = #{id}
+    </update>
 </mapper>

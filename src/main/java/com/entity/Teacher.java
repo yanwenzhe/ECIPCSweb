@@ -1,21 +1,24 @@
 package com.entity;
 
+
 public class Teacher {
 
-  private String id;
-  private String username;
-  private String password;
-  private String phone;
+  private String id; //编号
+  private String username; //用户名
+  private String password; //密码
+  private String phone; //手机号
+  private String year; //年份
 
 
   public Teacher() {
   }
 
-  public Teacher(String id, String username, String password, String phone) {
+  public Teacher(String id, String username, String password, String phone, String year) {
     this.id = id;
     this.username = username;
     this.password = password;
     this.phone = phone;
+    this.year = year;
   }
 
   public String getId() {
@@ -51,6 +54,15 @@ public class Teacher {
 
   public void setPhone(String phone) {
     this.phone = phone;
+  }
+
+
+  public String getYear() {
+    return year;
+  }
+
+  public void setYear(String year) {
+    this.year = year;
   }
 
 }

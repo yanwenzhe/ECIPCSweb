@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.GraduationRequirementDao">
+
+    <insert id="addGraduationRequirement" parameterType="com.entity.GraduationRequirement">
+        INSERT INTO GraduationRequirement(id,indexPointId,yearStart,yearEnd,value)
+        VALUES (#{id},#{indexPoint},#{yearStart},#{yearEnd},#{value})
+    </insert>
+
+    <update id="updateGraduationRequirement" parameterType="com.entity.GraduationRequirement">
+        UPDATE GraduationRequirement SET value = #{value}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

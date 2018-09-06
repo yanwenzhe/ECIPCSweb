@@ -1,11 +1,13 @@
 package com.entity;
 
+
 public class Course {
 
-  private String id;//编号
-  private String name;//课程名
-  private String description;//课程描述
+  private String id; //编号
+  private String name; //课程名
+  private String description; //描述
   private String year; //年份
+
 
   public Course() {
   }
@@ -19,14 +21,6 @@ public class Course {
 
   public String getId() {
     return id;
-  }
-
-  public String getYear() {
-    return year;
-  }
-
-  public void setYear(String year) {
-    this.year = year;
   }
 
   public void setId(String id) {
@@ -49,6 +43,15 @@ public class Course {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+
+  public String getYear() {
+    return year;
+  }
+
+  public void setYear(String year) {
+    this.year = year;
   }
 
 }
