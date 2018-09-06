@@ -3,6 +3,8 @@ package com.dao;
 import com.entity.StudentScore;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface StudentScoreDao {
 
@@ -17,4 +19,6 @@ public interface StudentScoreDao {
      * @param studentScore
      */
     public void updateStudentScore(StudentScore studentScore);
+
+
 }

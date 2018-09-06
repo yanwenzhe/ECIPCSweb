@@ -100,7 +100,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="item in courseList">
+                                        <tr v-for="item in requirementList">
                                             <td>{{item.id}}</td>
                                             <td>{{item.name}}</td>
 
