@@ -5,13 +5,6 @@
   Time: 17:08
   To change this template use File | Settings | File Templates.
 --%>
-<%--
-  Created by IntelliJ IDEA.
-  User: Yan
-  Date: 2018/9/6
-  Time: 14:30
-  To change this template use File | Settings | File Templates.
---%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -62,15 +55,15 @@
                                 管理
                             </template>
                             <menu-item name="1-1"><a href="/system/professor/manageIndexPoint">指标点管理</a></menu-item>
-                            <menu-item  name="1-2"><a href="/teacher/gradeReview">课程管理</a></menu-item>
+                            <menu-item  name="1-2"><a href="/system/professor/manageCourse">课程管理</a></menu-item>
                         </Submenu>
                         <Submenu name="2">
                             <template slot="title">
                                 <Icon type="ios-navigate"></Icon>
                                 达成度计算
                             </template>
-                            <menu-item name="2-1"><a href="/teacher/result">毕业达成度计算</a></menu-item>
-                            <menu-item name="2-2"><a href="/teacher/improvedRecord">毕业达成度图形化</a></menu-item>
+                            <menu-item name="2-1"><a href="#">毕业达成度计算</a></menu-item>
+                            <menu-item name="2-2"><a href="#">毕业达成度图形化</a></menu-item>
                         </Submenu>
                 </Sider>
                 <Layout :style="{padding: '0 24px 24px'}">
@@ -120,9 +113,9 @@
                                         <tr v-for="item in courseList">
                                             <td>{{item.id}}</td>
                                             <td>{{item.name}}</td>
-                                            <td><span v-for="point in item.indexPointList">{{point.indexPoint}}</span></td>
+                                            <td><span v-for="point in item.indexPointList">{{point.indexPoint}};</span></td>
                                             <td>{{item.description}}</td>
-                                            <td><span v-for="point in item.teacherList">{{point.teacherName}}</span></td>
+                                            <td><span v-for="point in item.teacherList">{{point.teacherName}};</span></td>
 
                                         </tr>
 

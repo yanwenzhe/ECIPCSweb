@@ -2,9 +2,10 @@
   Created by IntelliJ IDEA.
   User: Yan
   Date: 2018/9/6
-  Time: 14:30
+  Time: 20:34
   To change this template use File | Settings | File Templates.
 --%>
+
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -16,7 +17,7 @@
     <%@include file="/WEB-INF/views/include/adminlteBlankScript.jsp" %>
 
 
-    <title>指标点管理</title>
+    <title>课程管理</title>
     <style>
         .centerContent{
             margin-top: 8px;
@@ -70,7 +71,7 @@
 
                     <Breadcrumb :style="{margin:'24px 0'}">
                         <breacrum-item>管理</breacrum-item>&nbsp;/&nbsp;
-                        <breacrum-item>指标点管理</breacrum-item>
+                        <breacrum-item>课程管理</breacrum-item>
                     </Breadcrumb>
                     <i-content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
 
@@ -79,32 +80,32 @@
                         <div class="centerContent">
                             <div class="backGroundWidth">
                                 <div style="margin-top: 12px;margin-bottom: 12px">
-                                    <i-button type="success" style="margin-left: 30px;">添加指标点</i-button>
-                                    <i-button type="success" style="margin-left: 20px;" @click="allRequirement()">查看所有毕业要求</i-button>
+                                    <i-button type="success" style="margin-left: 30px;">添加课程</i-button>
+                                    <i-button type="success" style="margin-left: 20px;" @click="allCourse()">查看所有课程</i-button>
 
-                                    <i-select  v-model="requirementId"
+                                    <i-select  v-model="indexPointId"
                                                style="float:right;width:150px;margin-right: 30px;"
-                                               :on-change="requirementIdChange()">
-                                        <i-option v-for="item in requirementList " :value="item.id" :key="item.name">
+                                               :on-change="indexPointIdChange()">
+                                        <i-option v-for="item in indexPointList " :value="item.id" :key="item.name">
                                             {{item.name}}
                                         </i-option>
                                     </i-select>
-                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">请选择指标要求</p>
+                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">请选择指标点</p>
                                 </div>
                             </div>
                         </div>
-                            <br>
+                        <br>
 
                         <div class="centerContent">
                             <div class="backgroundWidth" >
                                 <div style="margin-top: 20px;margin-bottom: 12px; margin-left:30px;margin-right: 30px">
                                     <table class="table table-bordered table-hover">
                                         <tbody>
-                                            <tr >
-                                                <td style="background-color: #ffffff;width:20%;">{{requirementName}}</td>
-                                                <td style="background-color: #ffffff">{{requirementDesc}}</td>
+                                        <tr >
+                                            <td style="background-color: #ffffff;width:20%;">指标点{{indexPoint}}</td>
+                                            <td style="background-color: #ffffff">{{indexPointDesc}}</td>
 
-                                            </tr>
+                                        </tr>
                                         </thead>
                                     </table>
                                 </div>
@@ -114,22 +115,28 @@
                                         <thead>
                                         <tr>
                                             <th>编号</th>
-                                            <th>指标名</th>
-                                            <th>年限范围</th>
-                                            <th>指标描述</th>
+                                            <th>课程名</th>
+                                            <th>支撑程度/系数</th>
+                                            <th>教学内容</th>
+                                            <th>考核内容</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="item in indexPointList">
+                                        <tr v-for="item in courseList">
                                             <td>{{item.id}}</td>
-                                            <td>{{item.indexPoint}}</td>
-                                            <td>{{item.yearStart}}-{{item.yearEnd}}</td>
-                                            <td>{{item.description}}</td>
-
+                                            <td>{{item.name}}</td>
+                                            <td v-if="item.supportDegree=='H'">
+                                                {{item.supportDegree}}/{{item.supportFactor}}
+                                            </td>
+                                            <td v-else>
+                                                {{item.supportDegree}}
+                                            </td>
+                                            <td>{{item.teachingContent}}</td>
+                                            <td>{{item.assessmentContent}}</td>
                                             <td>
                                                 <i-button type="primary" size="small">编辑</i-button>&nbsp;&nbsp;
-                                                <i-button type="error" size="small">删除</i-button>
+
                                             </td>
                                         </tr>
 
@@ -155,19 +162,9 @@
     var vue = new Vue({
         el:"#app",
         data:{
-            requirementId:"1",
-            requirementName:'毕业要求1',
-            requirementDesc:'这个指标描述只这样的',
-            requirementList:[{
-                id:'1',
-                name:"毕业要求1",
-                desc:"这个毕业要求1描述只这样的"
-            },{
-                id:'2',
-                name:"毕业要求2",
-                desc:"这个毕业要求1描述只这样的"
-            }],
-            indexPointId:1,
+            indexPointDesc:'',
+            indexPointId:'001',
+            indexPoint:'',
             indexPointList:[{
                 id:'001',
                 indexPoint:'1.1',
@@ -180,22 +177,50 @@
                 yearStart:'2018',
                 yearEnd:'2020',
                 description:"这个指标1.2描述只这样的"
+            }],
+            courseList:[{
+                id:'2018001',
+                name:'《工科数学分析》',
+                supportDegree:'H',
+                supportFactor:0.3,
+                teachingContent:"这个教学内容我也不知道",
+                assessmentContent:"这个考核内容我也不知道",
+            },{
+                id:'2018002',
+                name:'《线性代数》',
+                supportDegree:'H',
+                supportFactor:0.3,
+                teachingContent:"这个教学内容我也不知道",
+                assessmentContent:"这个考核内容我也不知道",
+            },{
+                id:'2018003',
+                name:'《大学物理》',
+                supportDegree:'H',
+                supportFactor:0.4,
+                teachingContent:"这个教学内容我也不知道",
+                assessmentContent:"这个考核内容我也不知道",
+            },{
+                id:'2018004',
+                name:'《物理实验》',
+                supportDegree:'M',
+                supportFactor:0,
+                teachingContent:"这个教学内容我也不知道",
+                assessmentContent:"这个考核内容我也不知道",
             }]
 
         },
         methods:{
-            requirementIdChange(){
-                for(var i=0;i<this.requirementList.length;i++){
-                    if(this.requirementList[i].id==this.requirementId){
-                        this.requirementName=this.requirementList[i].name;
-                        this.requirementDesc=this.requirementList[i].desc;
+            indexPointIdChange(){
+                for(var i=0;i<this.indexPointList.length;i++){
+                    if(this.indexPointList[i].id==this.indexPointId){
+                        this.indexPoint=this.indexPointList[i].indexPoint;
+                        this.indexPointDesc=this.indexPointList[i].description;
                     }
                 }
             },
-            allRequirement(){
-                window.location.href='/system/professor/allRequirement';
-            },
-
+            allCourse(){
+                window.location.href='/system/professor/allCourse';
+            }
         },
     })
 

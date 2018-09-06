@@ -1,18 +1,19 @@
 package com.controller.professor;
 
+
 import com.utils.PageNameUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("system/professor/")
-public class ManageIndexPoint {
+public class ManageCourseController {
 
     /**
-     * 跳转到指标点管理界面
+     * 跳转管理课程界面
      */
-    @RequestMapping("manageIndexPoint")
+    @RequestMapping("manageCourse")
     public String manage(){
-        return PageNameUtil.MANAGE_INDEX_POINT;
+        return PageNameUtil.MANAGE_COURSE;
     }
 }
