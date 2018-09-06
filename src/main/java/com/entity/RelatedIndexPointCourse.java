@@ -2,20 +2,20 @@ package com.entity;
 
 public class RelatedIndexPointCourse {
 
-  private String id; //编号
-  private String indexPointId; //指标点id
-  private String courseId; //课程id
-  private long supportFactor; //支撑系数
-  private String supportDegree; //支撑程度
-  private double evaluateValue; //评估值
-  private String teachingContent; //教学内容
-  private String assessmentContent; //考核内容
-  private String year; //年份
+  private String id;
+  private String indexPointId;
+  private String courseId;
+  private double supportFactor;
+  private String supportDegree;
+  private double evaluateValue;
+  private String teachingContent;
+  private String assessmentContent;
+
 
   public RelatedIndexPointCourse() {
   }
 
-  public RelatedIndexPointCourse(String id, String indexPointId, String courseId, long supportFactor, String supportDegree, double evaluateValue, String teachingContent, String assessmentContent, String year) {
+  public RelatedIndexPointCourse(String id, String indexPointId, String courseId, double supportFactor, String supportDegree, double evaluateValue, String teachingContent, String assessmentContent) {
     this.id = id;
     this.indexPointId = indexPointId;
     this.courseId = courseId;
@@ -24,7 +24,6 @@ public class RelatedIndexPointCourse {
     this.evaluateValue = evaluateValue;
     this.teachingContent = teachingContent;
     this.assessmentContent = assessmentContent;
-    this.year = year;
   }
 
   public String getId() {
@@ -54,11 +53,11 @@ public class RelatedIndexPointCourse {
   }
 
 
-  public long getSupportFactor() {
+  public double getSupportFactor() {
     return supportFactor;
   }
 
-  public void setSupportFactor(long supportFactor) {
+  public void setSupportFactor(double supportFactor) {
     this.supportFactor = supportFactor;
   }
 
@@ -96,15 +95,6 @@ public class RelatedIndexPointCourse {
 
   public void setAssessmentContent(String assessmentContent) {
     this.assessmentContent = assessmentContent;
-  }
-
-
-  public String getYear() {
-    return year;
-  }
-
-  public void setYear(String year) {
-    this.year = year;
   }
 
 }

@@ -1,18 +1,20 @@
 package com.entity;
 
+
 public class IndexRequirement {
 
-  private String id; //编号
-  private String name; //名称
-  private String description; //指标要求描述
+  private String id;
+  private String name;
+  private String description;
 
-  public IndexRequirement() {
-  }
 
   public IndexRequirement(String id, String name, String description) {
     this.id = id;
     this.name = name;
     this.description = description;
+  }
+
+  public IndexRequirement() {
   }
 
   public String getId() {

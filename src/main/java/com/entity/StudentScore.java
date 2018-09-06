@@ -2,13 +2,13 @@ package com.entity;
 
 public class StudentScore {
 
-  private String id; //编号
-  private String courseId; //课程id
-  private String studentId; //学生id，不是学号
-  private String indexPointId; //指标点id
-  private String columName; //列名，及每道题对应指标点的一列
-  private double score; //每道题对应指标点的分数
-  private double fullScore; //每道题对应指标点的分配分值
+  private String id;
+  private String courseId;
+  private String studentId;
+  private String indexPointId;
+  private String columName;
+  private double score;
+  private double fullScore;
 
   public StudentScore() {
   }

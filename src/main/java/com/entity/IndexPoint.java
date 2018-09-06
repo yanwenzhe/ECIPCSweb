@@ -2,30 +2,32 @@ package com.entity;
 
 public class IndexPoint {
 
-  private double id; //编号
-  private String indexRequirementId; //指标要求
-  private String point; //指标点
-  private String yearStart; //开始年份
-  private String yearEnd; //结束年份
-  private String description; //描述
+  private String id;
+  private String indexRequirementId;
+  private String point;
+  private String yearStart;
+  private String yearEnd;
+  private String description;
+
+
+  public IndexPoint(String id, String indexRequirementId, String point, String yearStart, String yearEnd, String description) {
+    this.id = id;
+    this.indexRequirementId = indexRequirementId;
+    this.point = point;
+    this.yearStart = yearStart;
+    this.yearEnd = yearEnd;
+    this.description = description;
+  }
 
   public IndexPoint() {
   }
 
-  public IndexPoint(double id, String indexRequirementId, String point, String yearStart, String yearEnd, String description) {
-      this.id = id;
-      this.indexRequirementId = indexRequirementId;
-      this.point = point;
-      this.yearStart = yearStart;
-      this.yearEnd = yearEnd;
-      this.description = description;
+
+  public String getId() {
+    return id;
   }
 
-  public double getId() {
-    return id;
-    }
-
-  public void setId(double id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -38,13 +40,15 @@ public class IndexPoint {
     this.indexRequirementId = indexRequirementId;
   }
 
-    public String getPoint() {
-        return point;
-    }
 
-    public void setPoint(String point) {
-        this.point = point;
-    }
+  public String getPoint() {
+    return point;
+  }
+
+  public void setPoint(String point) {
+    this.point = point;
+  }
+
 
   public String getYearStart() {
     return yearStart;

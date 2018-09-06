@@ -1,11 +1,12 @@
 package com.entity;
 
+
 public class Student {
 
-  private String id; //编号
-  private String schoolNumber; //学号
-  private String name; //姓名
-  private String classId; //班号
+  private String id;
+  private String schoolNumber;
+  private String name;
+  private String classId;
 
   public Student() {
   }
@@ -16,6 +17,7 @@ public class Student {
     this.name = name;
     this.classId = classId;
   }
+
 
   public String getId() {
     return id;
@@ -33,6 +35,7 @@ public class Student {
   public void setSchoolNumber(String schoolNumber) {
     this.schoolNumber = schoolNumber;
   }
+
 
   public String getName() {
     return name;
