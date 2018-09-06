@@ -2,13 +2,13 @@ package com.entity;
 
 public class StudentScore {
 
-  private String id;
-  private String courseId;
-  private String studentId;
-  private String indexPointId;
-  private String columName;
-  private double score;
-  private double fullScore;
+  private String id; //编号
+  private String courseId; //课程id
+  private String studentId; //学生id
+  private String indexPointId; //指标点id
+  private String columName; //列名
+  private double score; //分数
+  private double fullScore; //满分
 
   public StudentScore() {
   }

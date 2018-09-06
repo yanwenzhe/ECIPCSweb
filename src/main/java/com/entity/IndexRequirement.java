@@ -3,9 +3,9 @@ package com.entity;
 
 public class IndexRequirement {
 
-  private String id;
-  private String name;
-  private String description;
+  private String id; //编号
+  private String name; //指标要求的名称
+  private String description; //描述
 
 
   public IndexRequirement(String id, String name, String description) {

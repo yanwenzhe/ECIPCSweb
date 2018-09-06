@@ -8,4 +8,11 @@
         INSERT INTO Course(id,name,description,year)
         VALUES (#{id},#{name},#{description},#{year})
     </insert>
+
+    <update id="updateCourse" parameterType="com.entity.Course">
+        UPDATE Course SET name = #{name}, description = #{description}
+        WHERE id = #{id}
+    </update>
+
+
 </mapper>

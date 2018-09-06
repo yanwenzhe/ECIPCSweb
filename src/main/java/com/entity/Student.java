@@ -3,10 +3,10 @@ package com.entity;
 
 public class Student {
 
-  private String id;
-  private String schoolNumber;
-  private String name;
-  private String classId;
+  private String id; //编号
+  private String schoolNumber; //学号
+  private String name; //姓名
+  private String classId; //班号
 
   public Student() {
   }

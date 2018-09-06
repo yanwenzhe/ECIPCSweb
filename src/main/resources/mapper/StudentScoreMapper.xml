@@ -5,4 +5,13 @@
 
 <mapper namespace="com.dao.StudentScoreDao">
 
+    <insert id="addStudentScore" parameterType="com.entity.StudentScore">
+        INSERT INTO StudentScore (id,courseId,teacherId,studentId,indexPointId,columName,score,fullScore)
+        VALUES (#{id},#{courseId},#{teacherId},#{studentId},#{indexPointId},#{columName},#{score},#{fullScore})
+    </insert>
+
+    <update id="updateStudentScore" parameterType="com.entity.StudentScore">
+        UPDATE StudentScore SET score = #{score}, fullScore = #{fullScore}
+        WHERE id = #{id}
+    </update>
 </mapper>

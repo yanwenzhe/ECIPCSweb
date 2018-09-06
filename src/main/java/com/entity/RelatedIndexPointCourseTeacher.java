@@ -3,12 +3,12 @@ package com.entity;
 
 public class RelatedIndexPointCourseTeacher {
 
-  private String id;
-  private String indexPointId;
-  private String courseId;
-  private String teacherId;
-  private String hasChosen;
-  private double evaluteValue;
+  private String id; //编号
+  private String indexPointId; //指标点id
+  private String courseId; //课程id
+  private String teacherId; //教师id
+  private String hasChosen; //是否选中
+  private double evaluteValue; //评估值
 
 
   public RelatedIndexPointCourseTeacher() {

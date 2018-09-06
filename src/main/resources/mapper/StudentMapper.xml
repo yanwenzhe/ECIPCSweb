@@ -5,4 +5,9 @@
 
 <mapper namespace="com.dao.StudentDao">
 
+    <insert id="addStudent" parameterType="com.entity.Student">
+        INSERT INTO Student (id,schoolNumber,name,classId)
+        VALUES (#{id},#{schoolNumber},#{name},#{classId})
+    </insert>
+
 </mapper>

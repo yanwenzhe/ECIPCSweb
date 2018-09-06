@@ -3,11 +3,11 @@ package com.entity;
 
 public class Teacher {
 
-  private String id;
-  private String username;
-  private String password;
-  private String phone;
-  private String year;
+  private String id; //编号
+  private String username; //用户名
+  private String password; //密码
+  private String phone; //手机号
+  private String year; //年份
 
 
   public Teacher() {

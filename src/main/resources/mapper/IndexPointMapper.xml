@@ -5,4 +5,14 @@
 
 <mapper namespace="com.dao.IndexPointDao">
 
+    <insert id="addIndexPoint" parameterType="com.entity.IndexPoint">
+        INSERT INTO IndexPoint(id,indexRequirementId,point,yearStart,yearEnd,description)
+        VALUES (#{id},#{indexRequirementId},#{point},#{yearStart},#{yearEnd},#{description})
+    </insert>
+
+    <update id="updateIndexPoint" parameterType="com.entity.IndexPoint">
+        UPDATE IndexPoint SET description = #{description}
+        WHERE id=#{id}
+    </update>
+
 </mapper>

@@ -2,14 +2,14 @@ package com.entity;
 
 public class RelatedIndexPointCourse {
 
-  private String id;
-  private String indexPointId;
-  private String courseId;
-  private double supportFactor;
-  private String supportDegree;
-  private double evaluateValue;
-  private String teachingContent;
-  private String assessmentContent;
+  private String id; //编号
+  private String indexPointId; //指标点id
+  private String courseId; //课程id
+  private double supportFactor; //支撑系数
+  private String supportDegree; //支撑程度
+  private double evaluateValue; //评估值
+  private String teachingContent; //对某个指标点的教学内容
+  private String assessmentContent; //对某个指标点的考核内容
 
 
   public RelatedIndexPointCourse() {

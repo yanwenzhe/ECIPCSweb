@@ -5,4 +5,13 @@
 
 <mapper namespace="com.dao.TeacherDao">
 
+    <insert id="addTeacher" parameterType="com.entity.Teacher">
+        INSERT INTO Teacher (id,username,password,phone,year)
+        VALUES (#{id},#{username},#{password},#{phone},#{year})
+    </insert>
+
+    <update id="updateTeacher" parameterType="com.entity.Teacher">
+        UPDATE Teacher SET password = #{password}, phone = #{phone}
+        WHERE id = #{id}
+    </update>
 </mapper>

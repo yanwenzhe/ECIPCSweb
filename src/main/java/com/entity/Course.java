@@ -3,10 +3,10 @@ package com.entity;
 
 public class Course {
 
-  private String id;
-  private String name;
-  private String description;
-  private String year;
+  private String id; //编号
+  private String name; //课程名
+  private String description; //描述
+  private String year; //年份
 
 
   public Course() {

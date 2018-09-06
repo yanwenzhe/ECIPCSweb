@@ -5,4 +5,14 @@
 
 <mapper namespace="com.dao.RelatedIndexPointCourseDao">
 
+    <insert id="addRelatedIndexPointCourse" parameterType="com.entity.RelatedIndexPointCourse">
+        INSERT INTO RelatedIndexPointCourse(id,indexPoint,courseId,supportFactor,supportDegree,evaluateValue,teachingContent,assessmentContent)
+        VALUES (#{id},#{indexPoint},#{courseId},#{supportFactor},#{supportDegree},#{evaluateValue},#{teachingContent},#{assessmentContent})
+    </insert>
+
+    <update id="updateRelatedIndexPointCourse" parameterType="com.entity.RelatedIndexPointCourse">
+        UPDATE RelatedIndexPointCourse SET supportFactor=#{supportFactor}, supportDegree = #{supportDegree},
+        evaluateValue = #{evaluateValue}, techingContent = #{techingContent}, assessmentContent = #{assessmentContent}
+        WHERE id = #{id}
+    </update>
 </mapper>

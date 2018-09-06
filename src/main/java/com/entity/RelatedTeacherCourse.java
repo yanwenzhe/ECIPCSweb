@@ -3,13 +3,13 @@ package com.entity;
 
 public class RelatedTeacherCourse {
 
-  private String id;
-  private String teacherId;
-  private String courseId;
-  private String oldProblem;
-  private String oldSuggestion;
-  private String result;
-  private String newProblem;
+  private String id; //编号
+  private String teacherId; //教师id
+  private String courseId; //课程id
+  private String oldProblem; //上一届存在的问题
+  private String oldSuggestion; //上一届的改进建议
+  private String result; //结果
+  private String newProblem; //新的问题
 
 
   public RelatedTeacherCourse() {

@@ -46,6 +46,7 @@ public class Readsheet {
 
         insertStudent_Score("excel\\2009~2011学年-应用系统开发实践.xlsx");
 
+
     }
 
     public static void insertCourse(String pathname) throws Exception
@@ -126,7 +127,7 @@ public class Readsheet {
 
                 String description = sArray[1];
 
-                System.out.println("INSERT INTO IndexPoint VALUES(\""+ id + "\",\"" + indexrequirement + "\",\"" + point + "\",\"" + yearStart + "\",\""+yearEnd + "\",\""+description+"\");" );
+                System.out.println("INSERT INTO IndexPoint(id,indexPointId,point,yearStart,yearEnd,description) VALUES(\""+ id + "\",\"" + indexrequirement + "\",\"" + point + "\",\"" + yearStart + "\",\""+yearEnd + "\",\""+description+"\");" );
 
             }
         }
@@ -236,13 +237,14 @@ public class Readsheet {
             for (int i = 4; i < sheet.getLastRowNum(); i++) {
 
                 row = sheet.getRow(i);
-                String id = GuidUtil.getGuid();    //随机生成Student表id
-                System.out.println("INSERT IGNORE INTO Student VALUES(\"" + id + "\",\"" + row.getCell(0).getStringCellValue() + "\",\"" + row.getCell(1).getStringCellValue() + "\",\"" + row.getCell(2).getStringCellValue() + "\");");
+                String studentid = GuidUtil.getGuid();    //随机生成Student表id
+                //System.out.println(row.getCell(0).getStringCellValue());
+                System.out.println("INSERT IGNORE INTO Student(id,schoolNumber,name,classId) VALUES(\"" + studentid + "\",\"" + row.getCell(0).getStringCellValue() + "\",\"" + row.getCell(1).getStringCellValue() + "\",\"" + row.getCell(2).getStringCellValue() + "\");");
 
                 for (int j= 3;j<row.getLastCellNum();j++) {
                     cell = row.getCell(j);
-                    String id1 = GuidUtil.getGuid();    //再次随机生成StudentScore表id
-                 System.out.println("INSERT INTO StudentScore SELECT\"" + id1 + "\",C.id,\"" + id + "\",I.id,\"" + columName.get(j) + "\"," +cell.getNumericCellValue()+","+sheet.getRow(2).getCell(j).getNumericCellValue()+" FROM Course C, IndexPoint I WHERE C.name=\"应用系统开发实践\" and C.year=\""+y+"\" and I.point=\""+sheet.getRow(1).getCell(j).getNumericCellValue()+"\" and I.yearStart<=\""+y+"\" and I.yearEnd>=\""+y+"\";");
+                    String scoreid = GuidUtil.getGuid();    //再次随机生成StudentScore表id
+                 System.out.println("INSERT INTO StudentScore(id,courseId,studentId,teacherId,indexPointId,columName,score,fullScore) SELECT\"" + scoreid + "\",C.id,S.id,T.id,I.id,\"" + columName.get(j) + "\"," +cell.getNumericCellValue()+","+sheet.getRow(2).getCell(j).getNumericCellValue()+" FROM Course C,Student S, Teacher T, IndexPoint I WHERE C.name=\"应用系统开发实践\" and C.year=\""+y+"\" and T.username=\"zhaoxiaolin\" and T.year=\""+y+"\" and I.point=\""+sheet.getRow(1).getCell(j).getNumericCellValue()+"\" and I.yearStart<=\""+y+"\" and I.yearEnd>\""+y+"\" and S.schoolNumber=\""+row.getCell(0).getStringCellValue()+"\";");
                 }
             }
         }
