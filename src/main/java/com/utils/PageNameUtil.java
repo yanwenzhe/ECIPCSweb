@@ -8,5 +8,7 @@ public class PageNameUtil {
     public final static String GRADEREVIEW = "/system/teacher/gradeReview";
     public final static String IMPORVEDANALUSIS = "/system/teacher/improvedAnalysis";
 
+    public final static String  MANAGE_INDEX_POINT= "/system/professor/manageIndexPoint";
+    public final static String  ALL_COURSE_VIEW= "/system/professor/allCourseView";
 
 }
