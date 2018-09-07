@@ -84,12 +84,19 @@
 
                                     <i-select  v-model="requirementId"
                                                style="float:right;width:150px;margin-right: 30px;"
-                                               :on-change="requirementIdChange()">
+                                               @on-change="requirementIdChange()">
                                         <i-option v-for="item in requirementList " :value="item.id" :key="item.name">
-                                            {{item.name}}
+                                            {{item.id+"."+item.name}}
                                         </i-option>
                                     </i-select>
-                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">请选择指标要求</p>
+                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">指标要求</p>
+
+                                    <date-picker type="year" v-model="year0"
+                                                 :ediltable="false"
+                                                 style="float:right;width:150px;margin-right: 30px;"
+                                                 @on-change="yearChange">
+                                    </date-picker>
+                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">年份</p>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +108,7 @@
                                     <table class="table table-bordered table-hover">
                                         <tbody>
                                             <tr >
-                                                <td style="background-color: #ffffff;width:20%;">{{requirementName}}</td>
+                                                <td style="background-color: #ffffff;width:20%;">{{requirementId+"."+requirementName}}</td>
                                                 <td style="background-color: #ffffff">{{requirementDesc}}</td>
 
                                             </tr>
@@ -123,13 +130,12 @@
                                         <tbody>
                                         <tr v-for="item in indexPointList">
                                             <td>{{item.id}}</td>
-                                            <td>{{item.indexPoint}}</td>
+                                            <td>{{item.point}}</td>
                                             <td>{{item.yearStart}}-{{item.yearEnd}}</td>
                                             <td>{{item.description}}</td>
 
                                             <td>
                                                 <i-button type="primary" size="small">编辑</i-button>&nbsp;&nbsp;
-                                                <i-button type="error" size="small">删除</i-button>
                                             </td>
                                         </tr>
 
@@ -152,51 +158,52 @@
 
 
 <script>
-    var vue = new Vue({
+    var app = new Vue({
         el:"#app",
         data:{
-            requirementId:"1",
-            requirementName:'毕业要求1',
-            requirementDesc:'这个指标描述只这样的',
-            requirementList:[{
-                id:'1',
-                name:"毕业要求1",
-                desc:"这个毕业要求1描述只这样的"
-            },{
-                id:'2',
-                name:"毕业要求2",
-                desc:"这个毕业要求1描述只这样的"
-            }],
-            indexPointId:1,
-            indexPointList:[{
-                id:'001',
-                indexPoint:'1.1',
-                yearStart:'2018',
-                yearEnd:'2020',
-                description:"这个指标1.1描述只这样的"
-            },{
-                id:'002',
-                indexPoint:'1.2',
-                yearStart:'2018',
-                yearEnd:'2020',
-                description:"这个指标1.2描述只这样的"
-            }]
-
+            requirementId:"",
+            requirementName:'',
+            requirementDesc:'',
+            requirementList:[],
+            indexPointId:"",
+            indexPointList:[],
+            year0:""
         },
         methods:{
             requirementIdChange(){
                 for(var i=0;i<this.requirementList.length;i++){
                     if(this.requirementList[i].id==this.requirementId){
                         this.requirementName=this.requirementList[i].name;
-                        this.requirementDesc=this.requirementList[i].desc;
+                        this.requirementDesc=this.requirementList[i].description;
                     }
                 }
+
+                ajaxGet("/system/professor/getIndexPointByIndexRequirement?indexRequirementId="+this.requirementId+"&year="+this.year0,function (d) {
+                    app.indexPointList = d.data.list;
+                },null,true,false);
+            },
+            refreshList() {
+                ajaxGet("/system/professor/getList",function (d) {
+                    app.requirementList = d.data.list;
+                },null,true,false);
+
+                ajaxGet("/system/professor/getIndexPointByIndexRequirement?indexRequirementId="+this.requirementId+"&year="+this.year0,function (d) {
+                    app.indexPointList = d.data.list;
+                },null,true,false);
+            },
+            yearChange(year){
+                this.year0 = year;
+                ajaxGet("/system/professor/getIndexPointByIndexRequirement?indexRequirementId="+this.requirementId+"&year="+this.year0,function (d) {
+                    app.indexPointList = d.data.list;
+                },null,true,false);
             },
             allRequirement(){
                 window.location.href='/system/professor/allRequirement';
             },
-
         },
+        mounted(){
+            this.refreshList();
+        }
     })
 
 </script>

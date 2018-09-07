@@ -27,16 +27,14 @@
                 and id = #{id}
             </if>
             <if test="indexRequirementId!=null">
-                and indexRequirement = #{indexRequirement}
+                and indexRequirementId = #{indexRequirementId}
             </if>
             <if test="point!=null">
                 and point =#{point}
             </if>
             <if test="yearStart!=null">
-                yearStart = #{yearStart}
-            </if>
-            <if test="yearEnd">
-                yearEnd = #{yearEnd}
+                and #{yearStart} >= yearStart
+                and yearEnd > #{yearStart}
             </if>
         </where>
     </select>

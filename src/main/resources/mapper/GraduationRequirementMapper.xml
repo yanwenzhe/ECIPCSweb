@@ -25,10 +25,8 @@
                 and indexPointId = #{indexPointId}
             </if>
             <if test="yearStart!=null">
-                and yearStart = #{yearStart}
-            </if>
-            <if test="yearEnd!=null">
-                and yearEnd = #{yearEnd}
+                and #{yearStart} >= yearStart
+                and yearEnd > #{yearStart}
             </if>
         </where>
     </select>

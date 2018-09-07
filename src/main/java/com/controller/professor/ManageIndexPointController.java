@@ -71,17 +71,23 @@ public class ManageIndexPointController {
 
     /**
      * 通过指标要求查询指标点信息
-     * @param indexRequirement
+     * @param indexRequirementId
      * @return
      */
-    @RequestMapping(value = "getIndexPointByIndexRequirement",method = RequestMethod.POST)
+    @RequestMapping(value = "getIndexPointByIndexRequirement")
     @ResponseBody
-    public Object getIndexPointByIndexRequirement(@RequestParam("indexRequirement") String indexRequirement)
+    public Object getIndexPointByIndexRequirement(@RequestParam("indexRequirementId") String indexRequirementId,
+                                                  @RequestParam("year") String year)
     {
-        IndexPoint indexPoint = new IndexPoint("",indexRequirement,"","","","");
+        if (indexRequirementId == "") indexRequirementId = null;
+        if(year == "") year = null;
+
+        System.out.println(year);
+        IndexPoint indexPoint = new IndexPoint(null,indexRequirementId,null,year,null,null);
         List<IndexPoint> list = indexPointDao.getIndexPoint(indexPoint);
         HashMap<String ,Object> hashMap=new HashMap<>();
         hashMap.put("list",list);
+        hashMap.put("success","success");
         return new AjaxMessge().Set(MsgType.Success,hashMap);
     }
 }
