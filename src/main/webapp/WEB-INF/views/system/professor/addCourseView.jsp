@@ -1,12 +1,10 @@
 <%--
   Created by IntelliJ IDEA.
   User: Yan
-  Date: 2018/9/6
-  Time: 20:34
+  Date: 2018/9/7
+  Time: 9:41
   To change this template use File | Settings | File Templates.
 --%>
-
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
@@ -17,7 +15,7 @@
     <%@include file="/WEB-INF/views/include/adminlteBlankScript.jsp" %>
 
 
-    <title>课程管理</title>
+    <title>添加课程</title>
     <style>
         .centerContent{
             margin-top: 8px;
@@ -71,7 +69,8 @@
 
                     <Breadcrumb :style="{margin:'24px 0'}">
                         <breacrum-item>管理</breacrum-item>&nbsp;/&nbsp;
-                        <breacrum-item>课程管理</breacrum-item>
+                        <breacrum-item>课程管理</breacrum-item>&nbsp;/&nbsp;
+                        <breacrum-item>添加课程</breacrum-item>
                     </Breadcrumb>
                     <i-content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
 
@@ -80,9 +79,7 @@
                         <div class="centerContent">
                             <div class="backGroundWidth">
                                 <div style="margin-top: 12px;margin-bottom: 12px">
-                                    <i-button type="success" style="margin-left: 30px;"  @click="addCourse()">添加课程</i-button>
-                                    <i-button type="success" style="margin-left: 20px;" @click="allCourse()">查看所有课程</i-button>
-
+                                    <i-button type="success" style="margin-left: 30px;">返回</i-button>
                                     <i-select  v-model="indexPointId"
                                                style="float:right;width:150px;margin-right: 30px;"
                                                :on-change="indexPointIdChange()">
@@ -91,57 +88,70 @@
                                         </i-option>
                                     </i-select>
                                     <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">请选择指标点</p>
+                                    <i-select  v-model="requirementId"
+                                               style="float:right;width:150px;margin-right: 30px;"
+                                               :on-change="requirementIdChange()">
+                                        <i-option v-for="item in requirementList " :value="item.id" :key="item.name">
+                                            {{item.name}}
+                                        </i-option>
+                                    </i-select>
+                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">请选择毕业要求</p>
                                 </div>
                             </div>
                         </div>
                         <br>
-
                         <div class="centerContent">
                             <div class="backgroundWidth" >
-                                <div style="margin-top: 20px;margin-bottom: 12px; margin-left:30px;margin-right: 30px">
-                                    <table class="table table-bordered table-hover">
-                                        <tbody>
-                                        <tr >
-                                            <td style="background-color: #ffffff;width:20%;">指标点{{indexPoint}}</td>
-                                            <td style="background-color: #ffffff">{{indexPointDesc}}</td>
-
-                                        </tr>
-                                        </thead>
-                                    </table>
-                                </div>
                                 <div style="margin-top: 20px;margin-bottom: 12px;margin-left:30px;margin-right: 30px">
-
-                                    <table class="table  table-bordered table-hover" style="background-color: #ffffff">
-                                        <thead>
-                                        <tr>
-                                            <th>编号</th>
-                                            <th>课程名</th>
-                                            <th>支撑程度/系数</th>
-                                            <th>教学内容</th>
-                                            <th>考核内容</th>
-                                            <th>操作</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr v-for="item in courseList">
-                                            <td>{{item.id}}</td>
-                                            <td>{{item.name}}</td>
-                                            <td v-if="item.supportDegree=='H'">
-                                                {{item.supportDegree}}/{{item.supportFactor}}
-                                            </td>
-                                            <td v-else>
-                                                {{item.supportDegree}}
-                                            </td>
-                                            <td>{{item.teachingContent}}</td>
-                                            <td>{{item.assessmentContent}}</td>
-                                            <td>
-                                                <i-button type="primary" size="small">编辑</i-button>&nbsp;&nbsp;
-
-                                            </td>
-                                        </tr>
-
-                                        </tbody>
-                                    </table>
+                                    <i-form :model="formCourse" :label-width="80">
+                                        <form-item label="课程名">
+                                            <i-input v-model="formCourse.name"></i-input>
+                                        </form-item>
+                                        <form-item label="课程描述">
+                                            <i-input v-model="formCourse.desc" type="textarea" :rows="4"></i-input>
+                                        </form-item>
+                                        <form-item label="指标点">
+                                            <i-button>
+                                                添加指标点支撑系数
+                                            </i-button>
+                                            <%--显示添加的指标点支撑系数--%>
+                                            <table class="table  table-bordered table-hover">
+                                                <tbody>
+                                                <tr v-for="item in formCourse.selectIndexPointList">
+                                                    <td>{{item.id}}</td>
+                                                    <td>{{item.name}}</td>
+                                                    <td v-if="item.supportDegree=='H'">
+                                                        {{item.supportDegree}}/{{item.supportFactor}}
+                                                    </td>
+                                                    <td v-else>
+                                                        {{item.supportDegree}}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </form-item>
+                                        <form-item label="年份">
+                                            <date-picker type="year" v-model="formCourse.year"
+                                                         style="width: 200px"
+                                                         clearable="false"
+                                                         on-change="yearChange(formCourse.year)">
+                                            </date-picker>
+                                        </form-item>
+                                        <form-item label="教师">
+                                            <i-select  v-model="formCourse.selectTeacherList"
+                                                       style="width:150px;"
+                                                       multiple>
+                                                <i-option v-for="item in teacherList " :value="item.id" :key="item.name">
+                                                    {{item.name}}
+                                                </i-option>
+                                            </i-select>
+                                        </form-item>
+                                        <form-item>
+                                            <i-button type="primary">
+                                                确认添加
+                                            </i-button>
+                                        </form-item>
+                                    </i-form>
 
                                 </div>
                             </div>
@@ -162,6 +172,13 @@
     var vue = new Vue({
         el:"#app",
         data:{
+            formCourse:{
+                name:'',
+                desc:'',
+                year:'',
+                selectIndexPointList:[],
+                selectTeacherList:[]
+            },
             indexPointDesc:'',
             indexPointId:'001',
             indexPoint:'',
@@ -182,30 +199,41 @@
                 id:'2018001',
                 name:'《工科数学分析》',
                 supportDegree:'H',
-                supportFactor:0.3,
-                teachingContent:"这个教学内容我也不知道",
-                assessmentContent:"这个考核内容我也不知道",
+                supportFactor:0.3
             },{
                 id:'2018002',
                 name:'《线性代数》',
                 supportDegree:'H',
-                supportFactor:0.3,
-                teachingContent:"这个教学内容我也不知道",
-                assessmentContent:"这个考核内容我也不知道",
+                supportFactor:0.3
             },{
                 id:'2018003',
                 name:'《大学物理》',
                 supportDegree:'H',
-                supportFactor:0.4,
-                teachingContent:"这个教学内容我也不知道",
-                assessmentContent:"这个考核内容我也不知道",
+                supportFactor:0.4
             },{
                 id:'2018004',
                 name:'《物理实验》',
                 supportDegree:'M',
-                supportFactor:0,
-                teachingContent:"这个教学内容我也不知道",
-                assessmentContent:"这个考核内容我也不知道",
+                supportFactor:0
+            }],
+            requirementId:"1",
+            requirementName:'毕业要求1',
+            requirementDesc:'这个指标描述只这样的',
+            requirementList:[{
+                id:'1',
+                name:"毕业要求1",
+                desc:"这个毕业要求1描述只这样的"
+            },{
+                id:'2',
+                name:"毕业要求2",
+                desc:"这个毕业要求1描述只这样的"
+            }],
+            teacherList:[{
+                id:'01',
+                name:'孙骁骁'
+            },{
+                id:'02',
+                name:'赵yiyi'
             }]
 
         },
@@ -218,11 +246,18 @@
                     }
                 }
             },
+            requirementIdChange(){
+                for(var i=0;i<this.requirementList.length;i++){
+                    if(this.requirementList[i].id==this.requirementId){
+                        //此处获取后台的对应的毕业要求的指标点
+                    }
+                }
+            },
+            yearChange(){
+                //此处获取相应年份的老师
+            },
             allCourse(){
                 window.location.href='/system/professor/allCourse';
-            },
-            addCourse(){
-                window.location.href='/system/professor/addCourse';
             }
         },
     })
@@ -231,3 +266,4 @@
 
 </body>
 </html>
+
