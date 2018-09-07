@@ -14,7 +14,7 @@
 <html>
 <head>
     <%@include file="/WEB-INF/views/include/adminlteBlankHead.jsp" %>
-    <%@include file="/WEB-INF/views/include/adminlteBlankScript.jsp" %>
+
 
 
     <title>查看所有毕业要求</title>
@@ -103,9 +103,8 @@
                                         <tr v-for="item in requirementList">
                                             <td>{{item.id}}</td>
                                             <td>{{item.name}}</td>
-
                                             <td>{{item.description}}</td>
-                                            <td><i-button type="primary" size="small">编辑</i-button></td>
+                                            <td><i-button type="primary" size="small" @click="test()">编辑</i-button></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -122,38 +121,30 @@
 
 </div>
 
-
-<script>
-    var vue = new Vue({
+<%@include file="/WEB-INF/views/include/adminlteBlankScript.jsp" %>
+<script type="text/javascript">
+    var app = new Vue({
         el:"#app",
         data:{
-            requirementList:[{
-                id:1,
-                name:'毕业要求1：工程知识',
-                description:'这就是毕业要求1的的描述',
-            },{
-                id:1,
-                name:'毕业要求2：问题分析',
-                description:'这就是毕业要求2的的描述',
-            }]
+            requirementList:[{id:2,name:'asdas',description:'asdas'}],
         },
         methods:{
 
             refreshList(){
                 ajaxGet("/system/professor/getList",function(data){
-                    console.log(data);
-                    this.requirementList=data;
-                    console.log(this.requirementList)
-                },false,false,false)
-
+                    app.requirementList=data.data.list;
+                    console.log(app.requirementList[1].name);
+                },null,true,false);
             },
+            test(){
+
+            }
         },
         mounted(){
-
-            this.refreshList();
+           this.refreshList();
         }
 
-    })
+    });
 
 </script>
 

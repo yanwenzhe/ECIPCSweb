@@ -5,6 +5,7 @@ import com.entity.IndexRequirement;
 import com.utils.AjaxMessge;
 import com.utils.MsgType;
 import com.utils.PageNameUtil;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +38,6 @@ public class AllRequirementController {
     @ResponseBody
     public Object getAllRequirements()
     {
-
       List<IndexRequirement> list = indexRequirementDao.getAllRequirements();
       HashMap<String ,Object> hashMap=new HashMap<>();
       hashMap.put("list",list);
