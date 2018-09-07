@@ -20,4 +20,8 @@ public class PageNameUtil {
     public final static String  ALL_COURSE_VIEW= "/system/professor/allCourseView";//查看所有课程
     public final static String  ADD_COURSE_VIEW= "/system/professor/addCourseView";//添加课程
 
+
+    //毕业达成度计算
+    public final static String VALUE_CALCULATED="/system/professor/valueCalculatedView";//毕业达成度计算界面
+    public final static String VALUE_CHART="/system/professor/valueChartView";//图形化
 }

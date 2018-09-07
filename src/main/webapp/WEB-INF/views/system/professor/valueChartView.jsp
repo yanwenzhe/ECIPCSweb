@@ -1,11 +1,10 @@
 <%--
   Created by IntelliJ IDEA.
   User: Yan
-  Date: 2018/9/6
-  Time: 21:12
+  Date: 2018/9/7
+  Time: 15:03
   To change this template use File | Settings | File Templates.
 --%>
-
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -17,7 +16,7 @@
     <%@include file="/WEB-INF/views/include/adminlteBlankScript.jsp" %>
 
 
-    <title>查看所有毕业要求</title>
+    <title>课程管理</title>
     <style>
         .centerContent{
             margin-top: 8px;
@@ -49,7 +48,7 @@
             </i-header>
             <Layout>
                 <Sider hide-trigger :style="{background:'#CCCCFF'}">
-                    <i-menu active-name="1-1" theme="blue" width="auto" :open-names="['1']" :style="{background:'#CCCCFF'}">
+                    <i-menu active-name="2-2" theme="blue" width="auto" :open-names="['2']" :style="{background:'#CCCCFF'}">
                         <Submenu name="1">
                             <template slot="title">
                                 <Icon type="ios-navigate"></Icon>
@@ -70,9 +69,8 @@
                 <Layout :style="{padding: '0 24px 24px'}">
 
                     <Breadcrumb :style="{margin:'24px 0'}">
-                        <breacrum-item>管理</breacrum-item>&nbsp;/&nbsp;
-                        <breacrum-item>指标点管理</breacrum-item>&nbsp;/&nbsp;
-                        <breacrum-item>查看所有毕业要求</breacrum-item>
+                        <breacrum-item>达成度计算</breacrum-item>&nbsp;/&nbsp;
+                        <breacrum-item>毕业达成度图形化</breacrum-item>
                     </Breadcrumb>
                     <i-content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
 
@@ -80,35 +78,28 @@
 
                         <div class="centerContent">
                             <div class="backGroundWidth">
-                                <div style="margin-top: 12px;margin-bottom: 12px;float:left ;margin-left: 30px">
+                                <div style="margin-top: 12px;margin-bottom: 12px">
 
-                                    <i-button shape="circle" type="success">返回</i-button>
+                                    <i-select  v-model="years"
+                                               style="float:right;width:150px;margin-right: 30px;"
+                                               >
+                                        <i-option v-for="item in yearsList " :value="item.id" :key="item.label">
+                                            {{item.label}}
+                                        </i-option>
+                                    </i-select>
+                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">请选择年限</p>
+                                    <br>
                                 </div>
                             </div>
                         </div>
                         <br>
+
                         <div class="centerContent">
                             <div class="backgroundWidth" >
-                                <div style="margin-top: 20px;margin-bottom: 12px;margin-left:30px;margin-right: 30px">
-                                    <table class="table  table-bordered table-hover" style="background-color: #ffffff">
-                                        <thead>
-                                        <tr>
-                                            <th>编号</th>
-                                            <th>毕业要求名</th>
-                                            <th>毕业要求描述</th>
-                                            <th>操作</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr v-for="item in requirementList">
-                                            <td>{{item.id}}</td>
-                                            <td>{{item.name}}</td>
 
-                                            <td>{{item.description}}</td>
-                                            <td><i-button type="primary" size="small">编辑</i-button></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div style="margin-top: 20px;margin-bottom: 12px;margin-left:30px;margin-right: 30px">
+
+
                                 </div>
                             </div>
                         </div>
@@ -127,37 +118,16 @@
     var vue = new Vue({
         el:"#app",
         data:{
-            requirementList:[{
-                id:1,
-                name:'毕业要求1：工程知识',
-                description:'这就是毕业要求1的的描述',
-            },{
-                id:1,
-                name:'毕业要求2：问题分析',
-                description:'这就是毕业要求2的的描述',
-            }]
+            years:'',
+            yearsList:[{id:'001',label:'2015-2017'},{id:'002',label:'2017-2019'}]
+
         },
         methods:{
 
-            refreshList(){
-                ajaxGet("/system/professor/getList",function(data){
-                    console.log(data);
-                    this.requirementList=data;
-                    console.log(this.requirementList)
-                },false,false,false)
-
-            },
         },
-        mounted(){
-
-            this.refreshList();
-        }
-
     })
 
 </script>
 
 </body>
 </html>
-
-
