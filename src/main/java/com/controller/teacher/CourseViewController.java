@@ -1,18 +1,19 @@
 package com.controller.teacher;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import static com.utils.PageNameUtil.RESULT;
+import static com.utils.PageNameUtil.COURSEVIEW;
 
 @Controller
 @RequestMapping("/teacher")
-public class resultController {
+public class CourseViewController {
 
-    @RequestMapping("/result")
-    public String result(){
+    @RequestMapping("/courseView")
+    public String courseView(){
 
-        return RESULT;
+        return COURSEVIEW;
 
     }
 

@@ -4,16 +4,16 @@ package com.controller.teacher;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import static com.utils.PageNameUtil.IMPORVEDANALUSIS;
+import static com.utils.PageNameUtil.GRADEREVIEW;
 
 @Controller
 @RequestMapping("/teacher")
-public class improvedAnalysis {
+public class GradeReview {
 
-    @RequestMapping("/improvedAnalysis")
-    public String improvedAnalysis(){
+    @RequestMapping("/gradeReview")
+    public String gradeReview(){
 
-        return IMPORVEDANALUSIS;
+        return GRADEREVIEW;
 
     }
 

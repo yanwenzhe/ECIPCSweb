@@ -8,7 +8,7 @@ import static com.utils.PageNameUtil.IMPORVEDRECORD;
 
 @Controller
 @RequestMapping("/teacher")
-public class improvedRecord {
+public class ImprovedRecord {
 
 
     @RequestMapping("/improvedRecord")
