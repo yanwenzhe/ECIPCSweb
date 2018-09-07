@@ -17,7 +17,7 @@ public class PageNameUtil {
 
     //管理课程界面
     public final static String  MANAGE_COURSE= "/system/professor/manageCourse";
-    public final static String  ALL_COURSE_VIEW= "/system/professor/allCourseView";
-
+    public final static String  ALL_COURSE_VIEW= "/system/professor/allCourseView";//查看所有课程
+    public final static String  ADD_COURSE_VIEW= "/system/professor/addCourseView";//添加课程
 
 }
