@@ -13,4 +13,16 @@
         UPDATE  IndexRequirement SET description = #{description}
         WHERE id = #{id}
     </update>
+
+    <select id="getIndexRequirement" parameterType="com.entity.IndexRequirement" resultType="com.entity.IndexRequirement">
+        SELECT * FROM IndexRequirement
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="name!=null">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -14,4 +14,22 @@
         UPDATE RelatedIndexPointCourseTeacher SET hasChosen = #{hasChosen}
         WHERE id = #{id}
     </update>
+
+    <select id="getRelatedIndexPointCourseTeacher" parameterType="com.entity.RelatedIndexPointCourseTeacher" resultType="com.entity.RelatedIndexPointCourseTeacher">
+        SELECT * FROM RelatedIndexPointCourseTeacher
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="indexPointId!=null">
+                and indexPointId = #{indexPoint}
+            </if>
+            <if test="courseId!=null">
+                and courseId = #{courseId}
+            </if>
+            <if test="hasChosen!=null">
+                and hasChosen = #{hasChosen}
+            </if>
+        </where>
+    </select>
 </mapper>

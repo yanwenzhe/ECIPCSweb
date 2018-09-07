@@ -14,4 +14,19 @@
         UPDATE RelatedTeacherCourse SET
         WHERE id = #{id}
     </update>
+
+    <select id="getRelatedTeacherCourse" resultType="com.entity.RelatedTeacherCourse" parameterType="com.entity.RelatedTeacherCourse">
+        SELECT * FROM RelatedTeacherCourse
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="teacherId!=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="courseId!=null">
+                and courseId = #{courseId}
+            </if>
+        </where>
+    </select>
 </mapper>

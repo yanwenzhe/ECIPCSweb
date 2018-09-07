@@ -20,5 +20,12 @@ public interface StudentScoreDao {
      */
     public void updateStudentScore(StudentScore studentScore);
 
+    /**
+     * 查询
+     * @param studentScore
+     * @return
+     */
+    public List<StudentScore> getStudentScore(StudentScore studentScore);
+
 
 }

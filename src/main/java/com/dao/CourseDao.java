@@ -3,6 +3,8 @@ package com.dao;
 import com.entity.Course;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CourseDao {
     /**
@@ -18,5 +20,11 @@ public interface CourseDao {
      */
     public void updateCourse(Course course);
 
+    /**
+     * 根据course对象里有的字段进行查询
+     * @param course
+     * @return
+     */
+    public List<Course> getCourse(Course course);
 
 }

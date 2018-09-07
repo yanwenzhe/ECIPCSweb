@@ -14,4 +14,28 @@
         UPDATE StudentScore SET score = #{score}, fullScore = #{fullScore}
         WHERE id = #{id}
     </update>
+
+    <select id="getStudentScore" resultType="com.entity.StudentScore" parameterType="com.entity.StudentScore">
+        SELECT * FROM StudentScore
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="teacherId!=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="courseId!=null">
+                and courseId = #{courseId}
+            </if>
+            <if test="studentId!=null">
+                and studentId = #{studentId}
+            </if>
+            <if test="indexPointId!=null">
+                and indexPoindeId = #{indexPointId}
+            </if>
+            <if test="columName!=null">
+                and columName = #{columName}
+            </if>
+        </where>
+    </select>
 </mapper>

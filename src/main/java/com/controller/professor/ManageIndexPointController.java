@@ -2,15 +2,19 @@ package com.controller.professor;
 
 import com.dao.IndexPointDao;
 import com.entity.IndexPoint;
+import com.utils.AjaxMessge;
 import com.utils.GuidUtil;
+import com.utils.MsgType;
 import com.utils.PageNameUtil;
-import org.openxmlformats.schemas.presentationml.x2006.main.STIndex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequestMapping("system/professor/")
@@ -65,4 +69,19 @@ public class ManageIndexPointController {
         indexPointDao.updateIndexPoint(indexPoint);
     }
 
+    /**
+     * 通过指标要求查询指标点信息
+     * @param indexRequirement
+     * @return
+     */
+    @RequestMapping(value = "getIndexPointByIndexRequirement",method = RequestMethod.POST)
+    @ResponseBody
+    public Object getIndexPointByIndexRequirement(@RequestParam("indexRequirement") String indexRequirement)
+    {
+        IndexPoint indexPoint = new IndexPoint("",indexRequirement,"","","","");
+        List<IndexPoint> list = indexPointDao.getIndexPoint(indexPoint);
+        HashMap<String ,Object> hashMap=new HashMap<>();
+        hashMap.put("list",list);
+        return new AjaxMessge().Set(MsgType.Success,hashMap);
+    }
 }

@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.entity.IndexPoint;
 import com.entity.IndexRequirement;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,11 @@ public interface IndexRequirementDao {
 
 
     /**
-     * 查看所有指标点
+     * 查询
+     * @param indexRequirement
+     * @return
      */
-    public List<IndexRequirement> getAllRequirements();
+    public List<IndexRequirement> getIndexRequirement(IndexRequirement indexRequirement);
 
 
     /**
@@ -21,4 +24,5 @@ public interface IndexRequirementDao {
      * @param indexRequirement
      */
     public void updateIndexRequirement(IndexRequirement indexRequirement);
+
 }

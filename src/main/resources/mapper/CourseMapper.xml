@@ -14,5 +14,19 @@
         WHERE id = #{id}
     </update>
 
+    <select id="getCourse" resultType="com.entity.Course" parameterType="com.entity.Course">
+        SELECT * FROM Course
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="name!=null">
+                and name = #{name}
+            </if>
+            <if test="year!=null">
+                and year = #{year}
+            </if>
+        </where>
+    </select>
 
 </mapper>

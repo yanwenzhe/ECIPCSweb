@@ -10,4 +10,21 @@
         VALUES (#{id},#{schoolNumber},#{name},#{classId})
     </insert>
 
+    <select id="getStudent" resultType="com.entity.Student" parameterType="com.entity.Student">
+    SELECT * FROM Student
+    <where>
+        <if test="id!=null">
+            and id = #{id}
+        </if>
+        <if test="teacherId!=null">
+            and schoolNumber = #{schoolNumber}
+        </if>
+        <if test="courseId!=null">
+            and name = #{name}
+        </if>
+        <if test="classId!=null">
+            and classId = #{classId}
+        </if>
+    </where>
+    </select>
 </mapper>

@@ -3,6 +3,8 @@ package com.dao;
 import com.entity.Teacher;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TeacherDao {
 
@@ -17,4 +19,11 @@ public interface TeacherDao {
      * @param teacher
      */
     public void updateTeacher(Teacher teacher);
+
+    /**
+     * 查询
+     * @param teacher
+     * @return
+     */
+    public List<Teacher> getTeacher(Teacher teacher);
 }

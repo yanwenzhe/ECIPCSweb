@@ -3,6 +3,8 @@ package com.dao;
 import com.entity.GraduationRequirement;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface GraduationRequirementDao {
 
@@ -17,4 +19,11 @@ public interface GraduationRequirementDao {
      * @param graduationRequirement
      */
     public void updateGraduationRequirement(GraduationRequirement graduationRequirement);
+
+    /**
+     * 查询
+     * @param graduationRequirement
+     * @return
+     */
+    public List<GraduationRequirement> getGraduationRequirement(GraduationRequirement graduationRequirement);
 }

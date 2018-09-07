@@ -3,6 +3,8 @@ package com.dao;
 import com.entity.IndexPoint;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface IndexPointDao {
 
@@ -17,4 +19,12 @@ public interface IndexPointDao {
      * @param indexPoint
      */
     public void updateIndexPoint(IndexPoint indexPoint);
+
+    /**
+     * 查询IndexPoint表
+     * @param indexPoint
+     * @return
+     */
+    public List<IndexPoint> getIndexPoint(IndexPoint indexPoint);
+
 }

@@ -3,6 +3,8 @@ package com.dao;
 import com.entity.RelatedIndexPointCourse;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface RelatedIndexPointCourseDao {
 
@@ -17,4 +19,11 @@ public interface RelatedIndexPointCourseDao {
      * @param relatedIndexPointCourse
      */
     public void updateRelatedIndexPointCourse(RelatedIndexPointCourse relatedIndexPointCourse);
+
+    /**
+     * 查询
+     * @param relatedIndexPointCourse
+     * @return
+     */
+    public List<RelatedIndexPointCourse> getRelatedIndexPointCourse(RelatedIndexPointCourse relatedIndexPointCourse);
 }

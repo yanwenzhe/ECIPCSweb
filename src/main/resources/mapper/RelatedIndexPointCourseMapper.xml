@@ -15,4 +15,19 @@
         evaluateValue = #{evaluateValue}, techingContent = #{techingContent}, assessmentContent = #{assessmentContent}
         WHERE id = #{id}
     </update>
+
+    <select id="getRelatedIndexPointCourse" resultType="com.entity.RelatedIndexPointCourse" parameterType="com.entity.RelatedIndexPointCourse">
+        SELECT * FROM RelatedIndexPointCourse
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="indexPointId!=null">
+                and indexPointId = #{indexPointId}
+            </if>
+            <if test="courseId!=null">
+                and courseId = #{courseId}
+            </if>
+        </where>
+    </select>
 </mapper>

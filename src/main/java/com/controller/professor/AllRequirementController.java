@@ -38,10 +38,12 @@ public class AllRequirementController {
     public Object getAllRequirements()
     {
 
-      List<IndexRequirement> list = indexRequirementDao.getAllRequirements();
-      HashMap<String ,Object> hashMap=new HashMap<>();
-      hashMap.put("list",list);
-      return new AjaxMessge().Set(MsgType.Success,hashMap);
+        IndexRequirement indexRequirement = new IndexRequirement(null,null,null);
+        List<IndexRequirement> list = indexRequirementDao.getIndexRequirement(indexRequirement);
+
+        HashMap<String ,Object> hashMap=new HashMap<>();
+        hashMap.put("list",list);
+        return new AjaxMessge().Set(MsgType.Success,hashMap);
     }
 
 

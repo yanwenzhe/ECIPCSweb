@@ -4,6 +4,8 @@ package com.dao;
 import com.entity.RelatedTeacherCourse;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface RelatedTeacherCourseDao {
 
@@ -18,6 +20,13 @@ public interface RelatedTeacherCourseDao {
      * @param relatedTeacherCourse
      */
     public void updateRelatedTeacherCourse(RelatedTeacherCourse relatedTeacherCourse);
+
+    /**
+     * 查询
+     * @param relatedTeacherCourse
+     * @return
+     */
+    public List<RelatedTeacherCourse> getRelatedTeacherCourse(RelatedTeacherCourse relatedTeacherCourse);
 }
 
 
