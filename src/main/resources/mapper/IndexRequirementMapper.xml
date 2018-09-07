@@ -5,7 +5,7 @@
 
 <mapper namespace="com.dao.IndexRequirementDao">
 
-    <select id="getAllRequirements" parameterType="com.entity.IndexRequirement">
+    <select id="getAllRequirements" resultType="com.entity.IndexRequirement">
         SELECT * FROM IndexRequirement
     </select>
 
