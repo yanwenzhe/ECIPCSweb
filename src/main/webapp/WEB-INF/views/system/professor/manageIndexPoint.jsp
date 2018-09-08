@@ -79,7 +79,7 @@
                         <div class="centerContent">
                             <div class="backGroundWidth">
                                 <div style="margin-top: 12px;margin-bottom: 12px">
-                                    <i-button type="success" style="margin-left: 30px;">添加指标点</i-button>
+                                    <i-button type="success" style="margin-left: 30px;" @click="addIndexPointFunc('0')">添加指标点</i-button>
                                     <i-button type="success" style="margin-left: 20px;" @click="allRequirement()">查看所有毕业要求</i-button>
 
                                     <i-select  v-model="requirementId"
@@ -135,7 +135,7 @@
                                             <td>{{item.description}}</td>
 
                                             <td>
-                                                <i-button type="primary" size="small">编辑</i-button>&nbsp;&nbsp;
+                                                <i-button type="primary" size="small" @click="addIndexPointFunc(item.id)">编辑</i-button>&nbsp;&nbsp;
                                             </td>
                                         </tr>
 
@@ -154,7 +154,51 @@
 
     </div>
 
+    <Modal  :title="modal.title" width="600" v-model="modal.show" :loading="modal.loading"
+              @on-ok="modal_ok(modal.type)" :mask-closable="false">
+        <i-form v-model="addIndexPoint" :label-width="80" v-if="modal.type==0">
+            <form-item label="指标名">
+                <i-input v-model="addIndexPoint.point" ></i-input>
+            </form-item>
+            <form-item>
+                <i-select  v-model="addIndexPoint.requirementId"
+                           style="width:150px;"
+                           >
+                    <i-option v-for="item in requirementList " :value="item.id" :key="item.name">
+                        {{item.id+"."+item.name}}
+                    </i-option>
+                </i-select>
+            </form-item>
+            <form-item label="起始年份">
+                <date-picker type="year" v-model="addIndexPoint.startYear"
+                             :ediltable="false"
+                             style="width:150px;"
+                             @on-change="addStartYearChange">
+                </date-picker>
+            </form-item>
+            <form-item label="结束年份">
+                <date-picker type="year" v-model="addIndexPoint.endYear"
+                             :ediltable="false"
+                             style="width:150px;"
+                             @on-change="addEndYearChange">
+                </date-picker>
+            </form-item>
+            <form-item label="指标描述">
+                <i-input v-model="addIndexPoint.description" text="textarea" :rows="4"></i-input>
+            </form-item>
+        </i-form>
+        <i-form :label-width="80" v-else>
+
+            <form-item label="编号">
+                <i-span>{{indexPointId}}</i-span>
+            </form-item>
+            <form-item label="指标描述">
+                <i-input v-model="indexPointDescription" text="textarea" :rows="4" ></i-input>
+            </form-item>
+        </i-form>
+    </Modal>
 </div>
+
 
 
 <script>
@@ -166,8 +210,22 @@
             requirementDesc:'',
             requirementList:[],
             indexPointId:"",
+            indexPointDescription:'',
             indexPointList:[],
-            year0:""
+            year0:"",
+            modal:{
+                title:'',
+                loading: true,
+                show: false,
+                type:0
+            },
+            addIndexPoint:{
+                requirementId:'',
+                point:'',
+                startYear:'',
+                endYear:'',
+                description:''
+            }
         },
         methods:{
             requirementIdChange(){
@@ -177,7 +235,6 @@
                         this.requirementDesc=this.requirementList[i].description;
                     }
                 }
-
                 ajaxGet("/system/professor/getIndexPointByIndexRequirement?indexRequirementId="+this.requirementId+"&year="+this.year0,function (d) {
                     app.indexPointList = d.data.list;
                 },null,true,false);
@@ -200,12 +257,69 @@
             allRequirement(){
                 window.location.href='/system/professor/allRequirement';
             },
+            addIndexPointFunc(value){
+                console.log(value);
+                if(value==='0')
+                {
+                    this.modal.title="添加指标点";this.modal.type=0;
+                    console.log(this.modal.title);
+                }
+                else{
+                    this.modal.title="编辑指标点";this.modal.type=1;
+                    for(var i=0;i<this.indexPointList.length;i++)
+                    {
+                        if (value==this.indexPointList[i].id){
+                            this.indexPointId=value;
+                            this.indexPointDescription=this.indexPointList[i].description;
+                            break;
+                        }
+                    }
+
+                }
+                this.modal.show = true;
+                console.log(this.modal.show);
+            },
+            modal_ok(type){
+                if(type==0){
+                    ajaxPostJSON("/system/professor/addIndexPoint",{addIndexPoint:app.addIndexPoint},function (d) {
+                        app.$Modal.success({
+                            title: "保存成功",
+                        });
+
+                    },function (d) {
+                        app.$Modal.error({
+                            title: "保存失败",
+                        });
+                    },false,false);
+                }
+                else{
+                    console.log(app.indexPointDescription);
+                    ajaxGet("/system/professor/updateIndexPoint?indexPointId="+app.indexPointId+
+                        "&indexPointDescription="+app.indexPointDescription,function (d) {
+                        app.$Modal.success({
+                            title: "修改成功",
+                        });
+
+                    },function (d) {
+                        app.$Modal.error({
+                            title: "修改失败",
+                        });
+                    },false,false)
+                }
+                this.modal.show=false;
+            },
+            addStartYearChange(year){
+                this.addIndexPoint.startYear=year;
+            },
+            addEndYearChange(year){
+                this.addIndexPoint.endYear=year;
+            }
+
         },
         mounted(){
             this.refreshList();
         }
     })
-
 </script>
 
 </body>

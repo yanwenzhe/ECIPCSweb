@@ -104,7 +104,7 @@
                                             <td>{{item.id}}</td>
                                             <td>{{item.name}}</td>
                                             <td>{{item.description}}</td>
-                                            <td><i-button type="primary" size="small" @click="test()">编辑</i-button></td>
+                                            <td><i-button type="primary" size="small" @click="edit(item)">编辑</i-button></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -118,7 +118,21 @@
         </Layout>
 
     </div>
+    <Modal  :title="modal.title" width="600" v-model="modal.show" :loading="modal.loading"
+            @on-ok="modal_ok()" :mask-closable="false">
+        <i-form :label-width="80" >
 
+            <form-item label="编号">
+                <i-span>{{id}}</i-span>
+            </form-item>
+            <form-item label="名称">
+                <i-span>{{name}}</i-span>
+            </form-item>
+            <form-item label="指标描述">
+                <i-input v-model="description" text="textarea" :rows="4" ></i-input>
+            </form-item>
+        </i-form>
+    </Modal>
 </div>
 
 <%@include file="/WEB-INF/views/include/adminlteBlankScript.jsp" %>
@@ -127,6 +141,14 @@
         el:"#app",
         data:{
             requirementList:[{id:2,name:'asdas',description:'asdas'}],
+            modal:{
+                title:'编辑毕业要求',
+                show:false,
+                loading:true
+            },
+            id:'',
+            name:"",
+            description:''
         },
         methods:{
 
@@ -136,8 +158,24 @@
                     console.log(app.requirementList[1].name);
                 },null,true,false);
             },
-            test(){
-
+            edit(item){
+                this.modal.show = true;
+                this.id=item.id;
+                this.name=item.name;
+                this.description=item.description;
+            },
+            modal_ok(){
+                ajaxGet("/system/professor/updateList?id="+app.id+
+                    "&description="+app.description,function () {
+                    app.$Modal.success({
+                        title: "修改成功",
+                    });
+                },function () {
+                    app.$Modal.error({
+                        title: "修改失败",
+                    });
+                },false,false)
+            this.modal.show=false;
             }
         },
         mounted(){

@@ -6,12 +6,12 @@ import com.utils.AjaxMessge;
 import com.utils.GuidUtil;
 import com.utils.MsgType;
 import com.utils.PageNameUtil;
+import net.sf.json.JSON;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,25 +34,28 @@ public class ManageIndexPointController {
 
     /**
      * 添加指标点
-     * @param indexPintId
-     * @param point
-     * @param yearStart
-     * @param yearEnd
-     * @param description
+     *
      */
     @RequestMapping(value = "addIndexPoint", method = RequestMethod.POST)
     @ResponseBody
-    public void addIndexPoint(@RequestParam("indexPointId") String indexPintId,
-                              @RequestParam("point") String point,
-                              @RequestParam("yearStart") String yearStart,
-                              @RequestParam("yearEnd") String yearEnd,
-                              @RequestParam("description") String description)
+    public Object addIndexPoint(@RequestBody JSONObject jsonObject)
     {
+        IndexPoint indexPoint = new IndexPoint();
+
+        JSONObject obj = jsonObject.getJSONObject("addIndexPoint");
+            indexPoint.setIndexRequirementId(obj.getString("requirementId"));
+            indexPoint.setDescription(obj.getString("description"));
+            indexPoint.setPoint(obj.getString("point"));
+            indexPoint.setYearStart(obj.getString("startYear"));
+            indexPoint.setYearEnd(obj.getString("endYear"));
+
         //随机id
         String id = GuidUtil.getGuid();
-        IndexPoint indexPoint = new IndexPoint(id,indexPintId,point,yearStart,yearEnd,description);
+        indexPoint.setId(id);
         indexPointDao.addIndexPoint(indexPoint);
-    }
+        HashMap<String ,Object> hashMap=new HashMap<>();
+        hashMap.put("success","success");
+        return new AjaxMessge().Set(MsgType.Success,hashMap);    }
 
 
     /**
@@ -60,13 +63,17 @@ public class ManageIndexPointController {
      * @param id
      * @param description
      */
-    @RequestMapping(value = "updateIndexPoint",method = RequestMethod.POST)
+    @RequestMapping(value = "updateIndexPoint")
     @ResponseBody
-    public void updateIndexPoint(@RequestParam("id") String id,
-                                 @RequestParam("description") String description)
+    public Object updateIndexPoint(@RequestParam("indexPointId") String id,
+                                 @RequestParam("indexPointDescription") String description)
     {
+        System.out.println("看看传入的"+description);
         IndexPoint indexPoint = new IndexPoint(id,"","","","",description);
         indexPointDao.updateIndexPoint(indexPoint);
+        HashMap<String ,Object> hashMap=new HashMap<>();
+        hashMap.put("success","success");
+        return new AjaxMessge().Set(MsgType.Success,hashMap);
     }
 
     /**

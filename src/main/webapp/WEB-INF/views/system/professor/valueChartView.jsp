@@ -99,6 +99,7 @@
 
                                 <div style="margin-top: 20px;margin-bottom: 12px;margin-left:30px;margin-right: 30px">
 
+                                        <div id="nightChart" style="width:100%;height:500px;"></div>
 
                                 </div>
                             </div>
@@ -113,9 +114,9 @@
 
 </div>
 
-
+<script src="/static/echarts/echarts.min.js" type="text/javascript"></script>
 <script>
-    var vue = new Vue({
+    var app = new Vue({
         el:"#app",
         data:{
             years:'',
@@ -125,7 +126,174 @@
         methods:{
 
         },
-    })
+    });
+    $(function () {
+        nightChart();
+        <%--ajaxGet("${ctx}/statistics/otherIndicators/jsonNightTraining", function (d) {--%>
+        <%--app.chartData = d.data.jsonObj;--%>
+        <%--nightChart();--%>
+        <%--}, null, false);--%>
+
+        function nightChart() {
+            var myChart = echarts.init(document.getElementById('nightChart'));
+
+            //要先得到json格式数据
+            var x_data=['1.1','1.2','1.3',
+                '2.1','2.2','2.3',
+                '3.1','3.2','3.3',
+                '4.1','4.2','4.3',
+                '5.1','5.2','5.3',
+                '6.1','6.2','6.3',
+                '7.1','7.2','7.3',
+                '8.1','8.2','8.3',
+                '9.1','9.2','9.3',
+                '10.1','10.2','10.3',
+                '11.1','11.2','11.3',
+                '12.1','12.2','12.3',
+            ];
+
+            var y_data_left=[0.6,0.72,0.75,
+                0.85, 0.6,0.72,
+                0.75,0.85, 0.6,
+                0.72,0.75,0.85,
+                0.6,0.72,0.75,
+                0.85, 0.6,0.72,
+                0.75,0.85, 0.6,
+                0.72,0.75,0.85,
+                0.6,0.72,0.75,
+                0.85, 0.6,0.72,
+                0.75,0.85, 0.6,
+                0.72,0.75,0.85,
+            ];
+            // console.log(app.chartData);
+            // alert(x_data);
+
+            var option = {
+                title: {
+                    text: '毕业达成度柱状图'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: 'rgba(255,255,255,0.8)',
+                            extraCssText: 'box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);',
+                            textStyle: {
+                                color: '#666',
+                            },
+                        },
+                    },
+                    backgroundColor: 'rgba(255,255,255,0.8)',
+                    extraCssText: 'box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);',
+                    textStyle: {
+                        color: '#666',
+                    }
+                },
+                legend: {
+                    data: ['达成度']
+                },
+                grid: {
+                    top: '100',
+                    left: '3%',
+                    right: '4%',
+                    bottom: '50',
+                    containLabel: true
+                },
+                xAxis: {
+                    name: "指标点",
+                    data: x_data,
+                    axisLabel: { //坐标轴刻度标签的相关设置。
+                        interval: 0, //设置为 1，表示『隔一个标签显示一个标签』
+                        //rotate:-30,
+                        textStyle: {
+                            color: '#666',
+                            fontStyle: 'normal',
+                        }
+                    },
+                    axisLine: { //坐标轴轴线相关设置
+                        lineStyle: {
+                            color: '#666',
+                            opacity: 1
+                        }
+                    },
+                    splitLine: { //坐标轴在 grid 区域中的分隔线。
+                        show: false,
+                    }
+                },
+                yAxis: [{
+                    name: '达成度',
+                    type: 'value',
+                    axisLabel: {
+                        textStyle: {
+                            color: '#666',
+                        }
+                    },
+                    axisLine: { //坐标轴轴线相关设置
+                        lineStyle: {
+                            color: '#666',
+                            opacity: 1
+                        }
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    splitLine: {
+                        show: false,
+                    }
+                }],
+                series: [{
+                    name: '达成度',
+                    type: 'bar',
+                    markLine: {
+                        color:'#FFFFFf',
+                        data: [[
+                            {name: '标线1起点', value: 0.5, xAxis: -1, yAxis: 0.7},      // 当xAxis为类目轴时，数值1会被理解为类目轴的index，通过xAxis:-1|MAXNUMBER可以让线到达grid边缘
+                            {name: '标线1终点', xAxis: '12.3', yAxis: 0.7},             // 当xAxis为类目轴时，字符串'周三'会被理解为与类目轴的文本进行匹配
+                        ]]
+                    },
+                    data: y_data_left,
+                    itemStyle: {
+                        normal: {
+                            //barBorderRadius: 15,
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: '#229aff'
+                                },
+                                    {
+                                        offset: 1,
+                                        color: '#13bfe8'
+                                    }
+                                ]
+                            )
+                        }
+                    }
+                }]
+                ,
+                dataZoom: [
+                    {
+                        type: 'slider',
+                        show: true,
+                        start: 50,
+                        end: 100,
+                        handleSize: 8,
+                        height: 25,
+                    },
+                    {
+                        type: 'inside',
+                        start: 50,
+                        end: 100
+                    },
+
+                ]
+
+            };
+            myChart.setOption(option);
+
+        }
+    });
+
 
 </script>
 

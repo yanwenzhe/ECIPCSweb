@@ -53,12 +53,15 @@ public class AllRequirementController {
      * @param description
      * @return
      */
-    @RequestMapping(value = "updateList", method = RequestMethod.POST)
+    @RequestMapping(value = "updateList")
     @ResponseBody
-    public void updateRequirement(@RequestParam("id") String id,
+    public Object updateRequirement(@RequestParam("id") String id,
             @RequestParam("description") String description)
     {
         IndexRequirement indexRequirement = new IndexRequirement(id,"",description);
         indexRequirementDao.updateIndexRequirement(indexRequirement);
+        HashMap<String ,Object> hashMap=new HashMap<>();
+        hashMap.put("success","success");
+        return new AjaxMessge().Set(MsgType.Success,hashMap);
     }
 }
