@@ -98,7 +98,7 @@ public class PinYinUtil {
     }
 
     public static void main(String[] args) {
-        String[] str = PinYinUtil.getCharPinYinString("单纯");
+        String[] str = PinYinUtil.getCharPinYinString("Corrie McKee");
         for(String s : str) {
             System.out.println(s);
         }
