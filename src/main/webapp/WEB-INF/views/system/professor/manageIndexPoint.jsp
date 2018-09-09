@@ -29,7 +29,6 @@
             width: 100%;
             overflow: auto;
         }
-
     </style>
 </head>
 <body>
@@ -100,18 +99,18 @@
                                 </div>
                             </div>
                         </div>
-                            <br>
+                        <br>
 
                         <div class="centerContent">
                             <div class="backgroundWidth" >
                                 <div style="margin-top: 20px;margin-bottom: 12px; margin-left:30px;margin-right: 30px">
                                     <table class="table table-bordered table-hover">
                                         <tbody>
-                                            <tr >
-                                                <td style="background-color: #ffffff;width:20%;">{{requirementId+"."+requirementName}}</td>
-                                                <td style="background-color: #ffffff">{{requirementDesc}}</td>
+                                        <tr >
+                                            <td style="background-color: #ffffff;width:20%;">{{requirementId+"."+requirementName}}</td>
+                                            <td style="background-color: #ffffff">{{requirementDesc}}</td>
 
-                                            </tr>
+                                        </tr>
                                         </thead>
                                     </table>
                                 </div>
@@ -155,7 +154,7 @@
     </div>
 
     <Modal  :title="modal.title" width="600" v-model="modal.show" :loading="modal.loading"
-              @on-ok="modal_ok(modal.type)" :mask-closable="false">
+            @on-ok="modal_ok(modal.type)" :mask-closable="false">
         <i-form v-model="addIndexPoint" :label-width="80" v-if="modal.type==0">
             <form-item label="指标名">
                 <i-input v-model="addIndexPoint.point" ></i-input>
@@ -163,7 +162,7 @@
             <form-item>
                 <i-select  v-model="addIndexPoint.requirementId"
                            style="width:150px;"
-                           >
+                >
                     <i-option v-for="item in requirementList " :value="item.id" :key="item.name">
                         {{item.id+"."+item.name}}
                     </i-option>
@@ -187,13 +186,19 @@
                 <i-input v-model="addIndexPoint.description" text="textarea" :rows="4"></i-input>
             </form-item>
         </i-form>
-        <i-form :label-width="80" v-else>
+        <i-form :label-width="80" v-else v-model="updateIndexPoint">
 
-            <form-item label="编号">
-                <i-span>{{indexPointId}}</i-span>
+            <form-item label="指标点">
+                <i-span>{{updateIndexPoint.point}}</i-span>
+            </form-item>
+            <form-item label="开始年份">
+                <i-span>{{updateIndexPoint.yearStart}}</i-span>
+            </form-item>
+            <form-item label="结束年份">
+                <i-span>{{updateIndexPoint.yearEnd}}</i-span>
             </form-item>
             <form-item label="指标描述">
-                <i-input v-model="indexPointDescription" text="textarea" :rows="4" ></i-input>
+                <i-input v-model="updateIndexPoint.description" text="textarea" :rows="4" ></i-input>
             </form-item>
         </i-form>
     </Modal>
@@ -225,6 +230,13 @@
                 startYear:'',
                 endYear:'',
                 description:''
+            },
+            updateIndexPoint:{
+                id:'',
+                point:'',
+                startYear:'',
+                endYear:'',
+                description:''
             }
         },
         methods:{
@@ -243,7 +255,6 @@
                 ajaxGet("/system/professor/getList",function (d) {
                     app.requirementList = d.data.list;
                 },null,true,false);
-
                 ajaxGet("/system/professor/getIndexPointByIndexRequirement?indexRequirementId="+this.requirementId+"&year="+this.year0,function (d) {
                     app.indexPointList = d.data.list;
                 },null,true,false);
@@ -269,12 +280,14 @@
                     for(var i=0;i<this.indexPointList.length;i++)
                     {
                         if (value==this.indexPointList[i].id){
-                            this.indexPointId=value;
-                            this.indexPointDescription=this.indexPointList[i].description;
+                            this.updateIndexPoint.id = value;
+                            this.updateIndexPoint.point=this.indexPointList[i].point;
+                            this.updateIndexPoint.yearStart=this.indexPointList[i].yearStart;
+                            this.updateIndexPoint.yearEnd=this.indexPointList[i].yearEnd;
+                            this.updateIndexPoint.description=this.indexPointList[i].description;
                             break;
                         }
                     }
-
                 }
                 this.modal.show = true;
                 console.log(this.modal.show);
@@ -285,7 +298,6 @@
                         app.$Modal.success({
                             title: "保存成功",
                         });
-
                     },function (d) {
                         app.$Modal.error({
                             title: "保存失败",
@@ -293,13 +305,10 @@
                     },false,false);
                 }
                 else{
-                    console.log(app.indexPointDescription);
-                    ajaxGet("/system/professor/updateIndexPoint?indexPointId="+app.indexPointId+
-                        "&indexPointDescription="+app.indexPointDescription,function (d) {
+                    ajaxPostJSON("/system/professor/updateIndexPoint",{udpateIndexPoint:app.updateIndexPoint},function (d) {
                         app.$Modal.success({
                             title: "修改成功",
                         });
-
                     },function (d) {
                         app.$Modal.error({
                             title: "修改失败",
@@ -307,6 +316,8 @@
                     },false,false)
                 }
                 this.modal.show=false;
+                this.refreshList();
+
             },
             addStartYearChange(year){
                 this.addIndexPoint.startYear=year;
@@ -314,7 +325,6 @@
             addEndYearChange(year){
                 this.addIndexPoint.endYear=year;
             }
-
         },
         mounted(){
             this.refreshList();

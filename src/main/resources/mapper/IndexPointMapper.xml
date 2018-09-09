@@ -15,11 +15,6 @@
         WHERE id=#{id}
     </update>
 
-    <select id="getIndexPointByIndexRequirement" resultType="com.entity.IndexPoint">
-        SELECT * FROM IndexPoint
-        WHERE indexRequirementId = #{indexRequirementId}
-    </select>
-
     <select id="getIndexPoint" resultType="com.entity.IndexPoint" parameterType="com.entity.IndexPoint">
         SELECT * FROM IndexPoint
         <where>

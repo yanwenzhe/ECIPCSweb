@@ -60,16 +60,14 @@ public class ManageIndexPointController {
 
     /**
      * 修改指标点的描述
-     * @param id
-     * @param description
+     *
      */
     @RequestMapping(value = "updateIndexPoint")
     @ResponseBody
-    public Object updateIndexPoint(@RequestParam("indexPointId") String id,
-                                 @RequestParam("indexPointDescription") String description)
+    public Object updateIndexPoint(@RequestBody JSONObject jsonObject)
     {
-        System.out.println("看看传入的"+description);
-        IndexPoint indexPoint = new IndexPoint(id,"","","","",description);
+        JSONObject obj = jsonObject.getJSONObject("udpateIndexPoint");
+        IndexPoint indexPoint = new IndexPoint(obj.getString("id"),null,null,null,null,obj.getString("description"));
         indexPointDao.updateIndexPoint(indexPoint);
         HashMap<String ,Object> hashMap=new HashMap<>();
         hashMap.put("success","success");

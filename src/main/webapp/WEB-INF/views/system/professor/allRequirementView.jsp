@@ -165,8 +165,7 @@
                 this.description=item.description;
             },
             modal_ok(){
-                ajaxGet("/system/professor/updateList?id="+app.id+
-                    "&description="+app.description,function () {
+                ajaxPostJSON("/system/professor/updateList",{updateList:{id:app.id,description:app.description}},function () {
                     app.$Modal.success({
                         title: "修改成功",
                     });
@@ -175,7 +174,8 @@
                         title: "修改失败",
                     });
                 },false,false)
-            this.modal.show=false;
+                this.modal.show=false;
+                this.refreshList();
             }
         },
         mounted(){

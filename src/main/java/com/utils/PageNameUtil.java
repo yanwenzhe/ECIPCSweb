@@ -8,6 +8,9 @@ public class PageNameUtil {
     public final static String GRADEREVIEW = "/system/teacher/gradeReview";
     public final static String IMPORVEDANALUSIS = "/system/teacher/improvedAnalysis";
 
+    //管理员
+    public final static String ADMIN = "/system/manageTeacher";
+
 
     //以下是责任教授的
 

@@ -30,7 +30,6 @@
     <div class="through">
         <div style="margin-top: 20px;width:80%;margin-left:10%">
             <i-input  placeholder="username" size="small"></i-input>
-
         </div>
         <div style="margin-top: 8px;width:80%;margin-left:10%">
             <i-input type="password" placeholder="password" size="small"></i-input>

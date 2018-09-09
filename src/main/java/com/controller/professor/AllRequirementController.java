@@ -5,12 +5,10 @@ import com.entity.IndexRequirement;
 import com.utils.AjaxMessge;
 import com.utils.MsgType;
 import com.utils.PageNameUtil;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,16 +47,15 @@ public class AllRequirementController {
 
     /**
      * post修改指标要求的描述
-     * @param id
-     * @param description
+
      * @return
      */
     @RequestMapping(value = "updateList")
     @ResponseBody
-    public Object updateRequirement(@RequestParam("id") String id,
-            @RequestParam("description") String description)
+    public Object updateRequirement(@RequestBody JSONObject jsonObject)
     {
-        IndexRequirement indexRequirement = new IndexRequirement(id,"",description);
+        JSONObject obj = jsonObject.getJSONObject("updateList");
+        IndexRequirement indexRequirement = new IndexRequirement(obj.getString("id"),"",obj.getString("description"));
         indexRequirementDao.updateIndexRequirement(indexRequirement);
         HashMap<String ,Object> hashMap=new HashMap<>();
         hashMap.put("success","success");

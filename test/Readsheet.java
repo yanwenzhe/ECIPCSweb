@@ -44,7 +44,7 @@ public class Readsheet {
          * Student 和 StudentScore表的插入
          */
 
-        insertStudent_Score("excel\\2009~2011学年-应用系统开发实践.xlsx");
+        insertStudent_Score("excel\\2009~2011学年-应用系统开发实践成绩-赵小林.xlsx");
 
 
     }
