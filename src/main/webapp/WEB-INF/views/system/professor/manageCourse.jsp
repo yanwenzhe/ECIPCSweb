@@ -84,14 +84,22 @@
                                     <i-button type="success" style="margin-left: 30px;"  @click="addCourse()">添加课程</i-button>
                                     <i-button type="success" style="margin-left: 20px;" @click="allCourse()">查看所有课程</i-button>
 
-                                    <i-select  v-model="indexPointId"
+                                    <i-select  v-model="indexPoint"
                                                style="float:right;width:150px;margin-right: 30px;"
-                                               :on-change="indexPointIdChange()">
+                                               @on-change="indexPointChange">
                                         <i-option v-for="item in indexPointList " :value="item.id" :key="item.name">
-                                            {{item.name}}
+                                            {{item.point}}
                                         </i-option>
                                     </i-select>
-                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">请选择指标点</p>
+                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">指标点</p>
+
+                                    <date-picker type="year" v-model="year0"
+                                                 :ediltable="false"
+                                                 style="float:right;width:150px;margin-right: 30px;"
+                                                 @on-change="yearChange">
+                                    </date-picker>
+                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">年份</p>
+
                                 </div>
                             </div>
                         </div>
@@ -104,7 +112,7 @@
                                         <tbody>
                                         <tr >
                                             <td style="background-color: #ffffff;width:20%;">指标点{{indexPoint}}</td>
-                                            <td style="background-color: #ffffff">{{indexPointDesc}}</td>
+                                            <td style="background-color: #ffffff">{{indexPointDescription}}</td>
 
                                         </tr>
                                         </thead>
@@ -124,9 +132,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="item in courseList">
+                                        <tr v-for="item in list">
                                             <td>{{item.id}}</td>
-                                            <td>{{item.name}}</td>
+                                            <td>{{item.courseId}}</td>
                                             <td v-if="item.supportDegree=='H'">
                                                 {{item.supportDegree}}/{{item.supportFactor}}
                                             </td>
@@ -160,72 +168,71 @@
 
 
 <script>
-    var vue = new Vue({
+    var app = new Vue({
         el:"#app",
         data:{
-            indexPointDesc:'',
-            indexPointId:'001',
-            indexPoint:'',
-            indexPointList:[{
-                id:'001',
-                indexPoint:'1.1',
-                yearStart:'2018',
-                yearEnd:'2020',
-                description:"这个指标1.1描述只这样的"
-            },{
-                id:'002',
-                indexPoint:'1.2',
-                yearStart:'2018',
-                yearEnd:'2020',
-                description:"这个指标1.2描述只这样的"
-            }],
-            courseList:[{
-                id:'2018001',
-                name:'《工科数学分析》',
-                supportDegree:'H',
-                supportFactor:0.3,
-                teachingContent:"这个教学内容我也不知道",
-                assessmentContent:"这个考核内容我也不知道",
-            },{
-                id:'2018002',
-                name:'《线性代数》',
-                supportDegree:'H',
-                supportFactor:0.3,
-                teachingContent:"这个教学内容我也不知道",
-                assessmentContent:"这个考核内容我也不知道",
-            },{
-                id:'2018003',
-                name:'《大学物理》',
-                supportDegree:'H',
-                supportFactor:0.4,
-                teachingContent:"这个教学内容我也不知道",
-                assessmentContent:"这个考核内容我也不知道",
-            },{
-                id:'2018004',
-                name:'《物理实验》',
-                supportDegree:'M',
-                supportFactor:0,
-                teachingContent:"这个教学内容我也不知道",
-                assessmentContent:"这个考核内容我也不知道",
-            }]
-
+            indexPointId:'', //id
+            indexPoint:'', //指标点
+            indexPointDescription:'', //指标点描述
+            year0:'', //年份
+            indexPointList:[], //指标点选择列表
+            list:[],//关联表
         },
         methods:{
-            indexPointIdChange(){
-                for(var i=0;i<this.indexPointList.length;i++){
-                    if(this.indexPointList[i].id==this.indexPointId){
-                        this.indexPoint=this.indexPointList[i].indexPoint;
-                        this.indexPointDesc=this.indexPointList[i].description;
-                    }
-                }
-            },
+            //所有的点击按钮
             allCourse(){
                 window.location.href='/system/professor/allCourse';
             },
             addCourse(){
                 window.location.href='/system/professor/addCourse';
+            },
+
+            refreshList() {
+                //选中指标点后，年份也就确定了
+                ajaxGet("/system/professor/getIndexPointCourse1?indexPointId=" + this.indexPointId, function (d) {
+                    app.list = d.data.list;
+                }, null, true, false);
+
+                console.log(this.list.length);
+                for (var i = 0; i < this.list.length; i++) {
+                ajaxGet("/system/professor/getCourseName?courseId=" + this.list[i].courseId, function (d) {
+                    app.list[i].courseId = d.data.courseName;
+                    console(d.data.courseName);
+                }, null, true, false);
+                }
+            },
+
+            refreshIndexPoint(){
+                ajaxGet("/system/professor/getIndexPointList?year="+this.year0,function (d) {
+                    app.indexPointList = d.data.indexPointList;
+                },null,true,false);
+            },
+
+            yearChange(year){
+                this.year0 = year;
+                console.log(this.year0);
+                //获取指标点列表
+                this.refreshIndexPoint();
+
+                ajaxGet("/system/professor/getIndexPointCourseByYear?year="+this.year0,function (d) {
+                    app.list = d.data.list;
+                },null,true,false);
+            },
+
+            indexPointChange(){
+                for(var i=0;i<this.indexPointList.length;i++){
+                    if(this.indexPointList[i].point==this.indexPoint){//选择指标点之后，把id和描述记住
+                        app.indexPointDescription = this.indexPointList[i].description;
+                        app.indexPointId = this.indexPointList[i].id;
+                        break;
+                    }
+                    this.refreshList();
+                }
             }
         },
+        mounted(){
+            this.refreshList();
+        }
     })
 
 </script>

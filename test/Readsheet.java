@@ -257,7 +257,7 @@ public class Readsheet {
                 row = sheet.getRow(i);
                 String studentid = GuidUtil.getGuid();    //随机生成Student表id
                 //System.out.println(row.getCell(0).getStringCellValue());
-                System.out.println("INSERT IGNORE INTO Student(id,schoolNumber,name,classId) VALUES(\"" + studentid + "\",\"" + row.getCell(0).getStringCellValue() + "\",\"" + row.getCell(1).getStringCellValue() + "\",\"" + row.getCell(2).getStringCellValue() + "\");");
+                System.out.println("INSERT INTO Student(id,schoolNumber,name,classId) VALUES(\"" + studentid + "\",\"" + row.getCell(0).getStringCellValue() + "\",\"" + row.getCell(1).getStringCellValue() + "\",\"" + row.getCell(2).getStringCellValue() + "\");");
 
                 for (int j= 3;j<row.getLastCellNum();j++) {
                     cell = row.getCell(j);
