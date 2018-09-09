@@ -5,6 +5,7 @@ public class Teacher {
 
   private String id; //编号
   private String username; //用户名
+  private String name;//名字
   private String password; //密码
   private String phone; //手机号
   private String year; //年份
@@ -13,12 +14,21 @@ public class Teacher {
   public Teacher() {
   }
 
-  public Teacher(String id, String username, String password, String phone, String year) {
+  public Teacher(String id, String username, String name,String password, String phone, String year) {
     this.id = id;
     this.username = username;
+    this.name=name;
     this.password = password;
     this.phone = phone;
     this.year = year;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String getId() {

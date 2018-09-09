@@ -42,8 +42,8 @@
                 <p style="font-size: 30px;font-family: STXinwei;margin-top: 2px;color:navajowhite;float: left;">工程认证指标点计算系统</p>
 
                 <div style="float: right;margin-top: 2px; color:navajowhite">
-                    欢迎您！XXX&nbsp;&nbsp;
-                    <i-button size="small" type="info"><a href="/system/login/signIn">退出</a></i-button>
+                    欢迎您！${username}&nbsp;&nbsp;
+                    <i-button size="small" type="info"><a href="/system/login/returnLogin">退出</a></i-button>
                 </div>
             </i-header>
             <Layout>
@@ -65,6 +65,7 @@
                             <menu-item name="2-1"><a href="/system/professor/valueCalculated">毕业达成度计算</a></menu-item>
                             <menu-item  name="2-2"><a href="/system/professor/valueChart">毕业达成度图形化</a></menu-item>
                         </Submenu>
+                    </i-menu>
                 </Sider>
                 <Layout :style="{padding: '0 24px 24px'}">
 
@@ -85,7 +86,7 @@
                                     <date-picker type="year" v-model="year0"
                                                  style="width: 200px"
                                                  clearable="false"
-                                                 on-change="yearChange(year0)">
+                                                 @on-change="yearChange(year0)">
                                     </date-picker>
                                     <i-input type="text" v-model="courseName" style="width:200px" placeholder="课程名"></i-input>
                                     <i-button shape="circle" icon="ios-search"></i-button>

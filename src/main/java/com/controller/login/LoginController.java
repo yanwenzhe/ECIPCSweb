@@ -1,17 +1,32 @@
 package com.controller.login;
 
+import com.dao.TeacherDao;
+import com.entity.Teacher;
+import com.utils.AjaxMessge;
+import com.utils.MsgType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
-import static com.utils.PageNameUtil.ADMIN;
-import static com.utils.PageNameUtil.LOGIN;
-import static com.utils.PageNameUtil.MANAGE_INDEX_POINT;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+
+import static com.utils.PageNameUtil.*;
 
 @Controller
+@SessionAttributes(value = {"username"})
 @RequestMapping("/system/login")
 public class LoginController {
+
+
+    @Autowired private TeacherDao teacherDao;
+
     @RequestMapping("/signIn")
     public String asc()
     {
@@ -19,26 +34,71 @@ public class LoginController {
     }
 
 
+
     @RequestMapping("/verify")
     @ResponseBody()
-    public String veyifyIdentity(@RequestParam("username") String username,
-                                 @RequestParam("password") String password)
+    public Object veyifyIdentity(@RequestParam("username") String username,
+                                 @RequestParam("password") String password,
+                                 HttpSession httpSession, Model model)
     {
+        String url=null;
+        HashMap<String ,Object> hashMap=new HashMap<>();
         //管理员
         if (username.equals("admin") && password.equals("admin"))
         {
-            return ADMIN;
+            //设置session
+            model.addAttribute("username","管理员");
+            url=ADMIN;
+            hashMap.put("msg","success");
+            hashMap.put("url",url);
+            return new AjaxMessge().Set(MsgType.Success,hashMap);
         }
         //教授
         else if(username.equals("root") && password.equals("root"))
         {
-            return MANAGE_INDEX_POINT;
+            //设置session
+            model.addAttribute("username","责任教授");
+            url= MANAGE_INDEX_POINT;
+            hashMap.put("msg","success");
+            hashMap.put("url",url);
+            return new AjaxMessge().Set(MsgType.Success,hashMap);
         }
         //老师
-        else
-        {
-
+        else {
+            int book=0;
+            List<Teacher> teacherList=teacherDao.getTeacher(new Teacher(null,username,null,null,null,null));
+            if(teacherList!=null) {
+                for (Teacher teacher : teacherList) {
+                    if(teacher.getPassword().equals(password)){
+                        //设置session
+                        model.addAttribute("username",teacher.getName());
+                        book=1;
+                        break;
+                    }
+                }
+                if(book==1) {
+                    url = COURSEVIEW;
+                    hashMap.put("msg", "success");
+                    hashMap.put("url", url);
+                    return new AjaxMessge().Set(MsgType.Success, hashMap);
+                }
+                else {
+                    hashMap.put("msg","用户名或密码错误！");
+                    hashMap.put("url","/#");
+                    return new AjaxMessge().Set(MsgType.Success,hashMap);
+                }
+            }
+            hashMap.put("msg","用户名或密码错误！");
+            hashMap.put("url","/#");
+            return new AjaxMessge().Set(MsgType.Success,hashMap);
         }
-        return "fail";
+
+    }
+
+
+    @RequestMapping("/returnLogin")
+    public String returnLogin(SessionStatus sessionStatus){
+        sessionStatus.setComplete();
+        return LOGIN;
     }
 }
