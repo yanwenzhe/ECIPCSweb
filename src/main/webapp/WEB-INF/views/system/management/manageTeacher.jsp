@@ -154,7 +154,7 @@
                 <i-input v-model="phone" ></i-input>
             </form-item>
             <form-item label="新密码">
-                <i-input v-model="password" text="password" :rows="4"></i-input>
+                <i-input v-model="password" type="password" :rows="4"></i-input>
             </form-item>
         </i-form>
     </Modal>
@@ -198,7 +198,7 @@
             addTeacherFunc(){
                 this.modal.title="添加教师用户";
                 this.modal.show=true;
-                this.type=0;
+                this.modal.type=0;
             },
             editTeacher(item){
                 this.id=item.id;
@@ -209,13 +209,15 @@
                 this.username=item.username;
                 this.modal.title="编辑教师用户密码";
                 this.modal.show=true;
-                this.type=1;
+                this.modal.type=1;
             },
             modal_ok(type){
                 if(type==0){
                     ajaxPostJSON("/system/management/addTeacher",{addTeacher:app.addTeacher},function (d) {
+                        app.refreshList();
                         app.$Modal.success({
                             title: "添加成功",
+
                         });
                     },function (d) {
                         app.$Modal.error({
@@ -224,7 +226,8 @@
                     },false,false)
                 }
                 else {
-                    ajaxPostJSON("/system/management/updateTeacher",{addTeacher:{id:app.id,password:this.password,phone:this.phone}},function (d) {
+                    ajaxPostJSON("/system/management/updateTeacher",{updateTeacher:{id:app.id,password:this.password,phone:this.phone}},function (d) {
+                        app.refreshList();
                         app.$Modal.success({
                             title: "修改成功",
                         });
@@ -234,8 +237,8 @@
                         });
                     },false,false)
                 }
-                this.refreshList();
                 this.modal.show=false;
+
             },
             addYear(year){
                 this.addTeacher.year=year;

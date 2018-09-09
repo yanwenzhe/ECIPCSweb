@@ -38,4 +38,20 @@
             </if>
         </where>
     </select>
+
+    <select id="getColumName" resultType="String">
+        SELECT DISTINCT (columName)FROM StudentScore WHERE courseId = #{course}
+    </select>
+
+    <select id="getScore" resultType="java.long.double">
+        SELECT DISTINCT (fullScore)FROM StudentScore WHERE courseId = #{course} AND columName = #{colum}
+    </select>
+
+    <select id="getPointid" resultType="String">
+        SELECT DISTINCT (fullScore)FROM StudentScore WHERE courseId = #{course} AND columName = #{colum} AND fullScore = #{score}
+    </select>
+
+    <select id="getPoint" resultType="String">
+        SELECT DISTINCT (point)FROM StudentScore WHERE id = #{pointid}
+    </select>
 </mapper>

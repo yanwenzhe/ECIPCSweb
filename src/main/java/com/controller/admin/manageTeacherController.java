@@ -79,7 +79,7 @@ public class manageTeacherController {
 
         JSONObject obj=jsonObject.getJSONObject("updateTeacher");
         String id=obj.getString("id");
-       String password=obj.getString("password");
+        String password=obj.getString("password");
         String phone=obj.getString("phone");
         Teacher teacher =new Teacher(id,null,null,password,phone,null);
         teacherDao.updateTeacher(teacher);

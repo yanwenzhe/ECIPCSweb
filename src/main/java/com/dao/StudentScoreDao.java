@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.entity.StudentScore;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,5 +28,15 @@ public interface StudentScoreDao {
      */
     public List<StudentScore> getStudentScore(StudentScore studentScore);
 
+    /**
+     * 列名查询
+     */
+    public List<String> getColumName(@Param(value="course")String course);
 
+    /**
+     * 分配分数查询
+     */
+    public List<Double> getScore(@Param(value="course")String course,@Param(value="colum")String colum);
+    public List<String> getPointid(@Param(value="course")String course,@Param(value="colum")String colum,@Param(value="score")Double score);
+    public List<String> getPoint(@Param(value="pointid")String pointid);
 }
