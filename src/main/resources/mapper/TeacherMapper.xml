@@ -32,5 +32,6 @@
                 and year = #{year}
             </if>
         </where>
+        order by year desc
     </select>
 </mapper>

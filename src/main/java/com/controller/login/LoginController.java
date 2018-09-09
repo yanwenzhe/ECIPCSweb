@@ -73,8 +73,8 @@ public class LoginController {
                         //设置session
                         model.addAttribute("username",teacher.getName());
                         book=1;
-                        break;
                     }
+                    break;
                 }
                 if(book==1) {
                     url = COURSEVIEW;
