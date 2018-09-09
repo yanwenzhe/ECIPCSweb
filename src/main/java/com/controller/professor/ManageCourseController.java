@@ -48,7 +48,7 @@ public class ManageCourseController {
     public Object getIndexPointCourse(@RequestBody JSONObject jsonObject)
     {
         HashMap<String ,Object> hashMap=new HashMap<>();
-       // hashMap.put("list",list);
+        // hashMap.put("list",list);
         hashMap.put("success","success");
         return new AjaxMessge().Set(MsgType.Success,hashMap);
     }
@@ -85,15 +85,15 @@ public class ManageCourseController {
         List<IndexPoint> indexPoints = indexPointDao.getIndexPoint(indexPoint);
         List<RelatedIndexPointCourse> relatedIndexPointCourses = new ArrayList<>();
         for (IndexPoint indexPoint1:indexPoints
-        ) {
+                ) {
             RelatedIndexPointCourse relatedIndexPointCourse = new RelatedIndexPointCourse(null,indexPoint1.getId(),null,0.0,null,0.0,null,null);
 
             relatedIndexPointCourses.addAll(relatedIndexPointCourseDao.getRelatedIndexPointCourse(relatedIndexPointCourse));
         }
 
         for (int i=0;i<relatedIndexPointCourses.size();i++
-        ) {
-           // System.out.println(relatedIndexPointCourses.get(i).getCourseId());
+                ) {
+            // System.out.println(relatedIndexPointCourses.get(i).getCourseId());
             relatedIndexPointCourses.get(i).setCourseId(getCourseName(relatedIndexPointCourses.get(i).getCourseId()));
             relatedIndexPointCourses.get(i).getCourseId();
         }
@@ -113,21 +113,21 @@ public class ManageCourseController {
     public Object getIndexPointCourse(@RequestParam("indexPointId") String indexPointId){
 
         if(indexPointId=="")indexPointId=null;
-       // System.out.println(indexPointId);
+        // System.out.println(indexPointId);
         RelatedIndexPointCourse relatedIndexPointCourse = new RelatedIndexPointCourse(null,indexPointId,null,0.0,null,0.0,null,null);
 
         List<RelatedIndexPointCourse> relatedIndexPointCourses = relatedIndexPointCourseDao.getRelatedIndexPointCourse(relatedIndexPointCourse);
-         HashMap<String ,Object> hashMap=new HashMap<>();
+        HashMap<String ,Object> hashMap=new HashMap<>();
 
         for (int i=0;i<relatedIndexPointCourses.size();i++
-             ) {
+                ) {
             //System.out.println(relatedIndexPointCourses.get(i).getCourseId());
             relatedIndexPointCourses.get(i).setCourseId(getCourseName(relatedIndexPointCourses.get(i).getCourseId()));
             relatedIndexPointCourses.get(i).getCourseId();
         }
 
-         hashMap.put("list",relatedIndexPointCourses);
-         return new AjaxMessge().Set(MsgType.Success,hashMap);
+        hashMap.put("list",relatedIndexPointCourses);
+        return new AjaxMessge().Set(MsgType.Success,hashMap);
     }
 
 
@@ -145,7 +145,7 @@ public class ManageCourseController {
 
         HashMap<String ,Object> hashMap=new HashMap<>();
 
-      return courses.get(0).getName();
+        return courses.get(0).getName();
 
 
     }

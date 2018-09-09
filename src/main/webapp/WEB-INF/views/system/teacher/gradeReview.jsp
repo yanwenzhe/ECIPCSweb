@@ -108,9 +108,7 @@
                                            <el-date-picker
                                                    v-model="formInline.value"
                                                    type="year"
-                                                   placeholder="选择年"
-                                                   value-format="yyyy"
-                                                   @change="change(formInline)">
+                                                   placeholder="选择年">
                                            </el-date-picker>
                                        </el-form-item>
                                        <el-form-item label="科目:">
@@ -130,7 +128,7 @@
                                            <el-input v-model="formInline.name" placeholder="姓名"></el-input>
                                        </el-form-item>
                                        <el-form-item>
-                                           <el-button type="primary" @click="onSubmit(formInline)">查询</el-button>
+                                           <el-button type="primary" @click="onSubmit">查询</el-button>
                                        </el-form-item>
                                    </el-form>
                                </div>

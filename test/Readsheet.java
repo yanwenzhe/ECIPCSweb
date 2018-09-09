@@ -32,14 +32,14 @@ public class Readsheet {
          */
 
         //insertIndexPoint("excel\\2009~2016学年-课程支撑矩阵.xlsx");
-       // insertIndexPoint("excel\\2016~2018学年-课程支撑矩阵.xlsx");
+        // insertIndexPoint("excel\\2016~2018学年-课程支撑矩阵.xlsx");
 
         /**
          *RelatedIndexPointCourse表数据的插入
          */
 
-       // insertIndexPoint_Course("excel\\2009~2016学年-课程支撑矩阵.xlsx");
-       // insertIndexPoint_Course("excel\\2016~2018学年-课程支撑矩阵.xlsx");
+        // insertIndexPoint_Course("excel\\2009~2016学年-课程支撑矩阵.xlsx");
+        // insertIndexPoint_Course("excel\\2016~2018学年-课程支撑矩阵.xlsx");
 
 
         /**
@@ -48,7 +48,7 @@ public class Readsheet {
 
         List<String> fileName = TakeFilePathAndName.getFile("D:\\workplace\\IDEA\\ECIPCSweb\\excel\\grade");
         for (String pathname:fileName
-             ) {
+                ) {
             insertStudent_Score("excel\\grade\\"+pathname);
         }
     }
@@ -86,7 +86,7 @@ public class Readsheet {
 
         //课程循环
         for (String name:courses
-             ) {
+                ) {
             //年份循环
             for(int y=yearStart;y<yearEnd;y++) {
                 String id = GuidUtil.getGuid();
@@ -262,7 +262,7 @@ public class Readsheet {
                 for (int j= 3;j<row.getLastCellNum();j++) {
                     cell = row.getCell(j);
                     String scoreid = GuidUtil.getGuid();    //再次随机生成StudentScore表id
-                 System.out.println("INSERT INTO StudentScore(id,courseId,studentId,teacherId,indexPointId,columName,score,fullScore) SELECT\"" + scoreid + "\",C.id,S.id,T.id,I.id,\"" + columName.get(j) + "\"," +cell.getNumericCellValue()+","+sheet.getRow(2).getCell(j).getNumericCellValue()+" FROM Course C,Student S, Teacher T, IndexPoint I WHERE C.name=\""+coursename+"\" and C.year=\""+y+"\" and T.username=\"zhaoxiaolin\" and T.year=\""+y+"\" and I.point=\""+sheet.getRow(1).getCell(j).getNumericCellValue()+"\" and I.yearStart<=\""+y+"\" and I.yearEnd>\""+y+"\" and S.schoolNumber=\""+row.getCell(0).getStringCellValue()+"\";");
+                    System.out.println("INSERT INTO StudentScore(id,courseId,studentId,teacherId,indexPointId,columName,score,fullScore) SELECT\"" + scoreid + "\",C.id,S.id,T.id,I.id,\"" + columName.get(j) + "\"," +cell.getNumericCellValue()+","+sheet.getRow(2).getCell(j).getNumericCellValue()+" FROM Course C,Student S, Teacher T, IndexPoint I WHERE C.name=\""+coursename+"\" and C.year=\""+y+"\" and T.username=\"zhaoxiaolin\" and T.year=\""+y+"\" and I.point=\""+sheet.getRow(1).getCell(j).getNumericCellValue()+"\" and I.yearStart<=\""+y+"\" and I.yearEnd>\""+y+"\" and S.schoolNumber=\""+row.getCell(0).getStringCellValue()+"\";");
                 }
             }
         }

@@ -81,22 +81,14 @@
                             <div class="backGroundWidth">
                                 <div style="margin-top: 12px;margin-bottom: 12px">
                                     <i-button type="success" style="margin-left: 30px;">返回</i-button>
-                                    <i-select  v-model="indexPointId"
-                                               style="float:right;width:150px;margin-right: 30px;"
-                                               :on-change="indexPointIdChange()">
-                                        <i-option v-for="item in indexPointList " :value="item.id" :key="item.name">
-                                            {{item.name}}
-                                        </i-option>
-                                    </i-select>
-                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">请选择指标点</p>
-                                    <i-select  v-model="requirementId"
-                                               style="float:right;width:150px;margin-right: 30px;"
-                                               :on-change="requirementIdChange()">
-                                        <i-option v-for="item in requirementList " :value="item.id" :key="item.name">
-                                            {{item.name}}
-                                        </i-option>
-                                    </i-select>
-                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">请选择毕业要求</p>
+
+
+                                    <date-picker type="year" v-model="formCourse.year"
+                                                 style="float:right;width:100px;margin-right: 30px;"
+                                                 clearable="false"
+                                                 @on-change="yearChange">
+                                    </date-picker>
+                                    <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">年份</p>
                                 </div>
                             </div>
                         </div>
@@ -112,31 +104,29 @@
                                             <i-input v-model="formCourse.desc" type="textarea" :rows="4"></i-input>
                                         </form-item>
                                         <form-item label="指标点">
-                                            <i-button>
-                                                添加指标点支撑系数
+                                            <i-button type="warning" @click="modalStart">
+                                                添加指标点
                                             </i-button>
                                             <%--显示添加的指标点支撑系数--%>
+                                        </form-item>
+                                        <form-item>
                                             <table class="table  table-bordered table-hover">
                                                 <tbody>
                                                 <tr v-for="item in formCourse.selectIndexPointList">
-                                                    <td>{{item.id}}</td>
-                                                    <td>{{item.name}}</td>
+                                                    <td>{{item.indexPointId}}</td>
+                                                    <td>{{item.point}}</td>
                                                     <td v-if="item.supportDegree=='H'">
                                                         {{item.supportDegree}}/{{item.supportFactor}}
                                                     </td>
                                                     <td v-else>
                                                         {{item.supportDegree}}
                                                     </td>
+                                                    <td>
+                                                        <i-button type="warning" @click="delete_item(item.indexPointId)">删除</i-button>
+                                                    </td>
                                                 </tr>
                                                 </tbody>
                                             </table>
-                                        </form-item>
-                                        <form-item label="年份">
-                                            <date-picker type="year" v-model="formCourse.year"
-                                                         style="width: 200px"
-                                                         clearable="false"
-                                                         on-change="yearChange(formCourse.year)">
-                                            </date-picker>
                                         </form-item>
                                         <form-item label="教师">
                                             <i-select  v-model="formCourse.selectTeacherList"
@@ -148,7 +138,7 @@
                                             </i-select>
                                         </form-item>
                                         <form-item>
-                                            <i-button type="primary">
+                                            <i-button type="primary" @click="submit()">
                                                 确认添加
                                             </i-button>
                                         </form-item>
@@ -165,12 +155,52 @@
         </Layout>
 
     </div>
-
+<Modal :title="modal.title" width="600" v-model="modal.show" :loading="modal.loading"
+    @on-ok="modal_ok()" :mask-closable="false">
+    <i-form  :label-width="150" >
+        <form-item label="毕业要求选择">
+            <i-select  v-model="requirementId"
+                       style="width:150px;margin-right: 30px;"
+                       @on-change="requirementIdChange()">
+                <i-option v-for="item in requirementList " :value="item.id" :key="item.name">
+                    {{item.name}}
+                </i-option>
+            </i-select>
+        </form-item>
+        <form-item label="指标点选择">
+            <i-select  v-model="indexPointId"
+                       style="width:150px;margin-right: 30px;"
+                       @on-change="indexPointIdChange()">
+                <i-option v-for="item in indexPointList " :value="item.id" :key="item.point">
+                    {{item.point}}
+                </i-option>
+            </i-select>
+        </form-item>
+        <form-item label="该指标点支撑的课程">
+            <table class="table-border table">
+                <tbody>
+                <tr v-for="item in courseList">
+                    <td>{{item.teachingContent}}</td>
+                    <td>
+                        <i-input v-model="item.supportFactor" >{{item.supportFactor}}</i-input>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form-item>
+        <form-item label="支撑程度">
+            <i-input v-model="selectIndexPoint.supportDegree" ></i-input>
+        </form-item>
+        <form-item label="系数">
+            <i-input v-model="selectIndexPoint.supportFactor" ></i-input>
+        </form-item>
+    </i-form>
+</Modal>
 </div>
 
 
 <script>
-    var vue = new Vue({
+    var app = new Vue({
         el:"#app",
         data:{
             formCourse:{
@@ -180,87 +210,142 @@
                 selectIndexPointList:[],
                 selectTeacherList:[]
             },
+            //year0:'',
             indexPointDesc:'',
-            indexPointId:'001',
+            indexPointId:'',
             indexPoint:'',
-            indexPointList:[{
-                id:'001',
-                indexPoint:'1.1',
-                yearStart:'2018',
-                yearEnd:'2020',
-                description:"这个指标1.1描述只这样的"
-            },{
-                id:'002',
-                indexPoint:'1.2',
-                yearStart:'2018',
-                yearEnd:'2020',
-                description:"这个指标1.2描述只这样的"
-            }],
-            courseList:[{
-                id:'2018001',
-                name:'《工科数学分析》',
-                supportDegree:'H',
-                supportFactor:0.3
-            },{
-                id:'2018002',
-                name:'《线性代数》',
-                supportDegree:'H',
-                supportFactor:0.3
-            },{
-                id:'2018003',
-                name:'《大学物理》',
-                supportDegree:'H',
-                supportFactor:0.4
-            },{
-                id:'2018004',
-                name:'《物理实验》',
-                supportDegree:'M',
-                supportFactor:0
-            }],
-            requirementId:"1",
-            requirementName:'毕业要求1',
-            requirementDesc:'这个指标描述只这样的',
-            requirementList:[{
-                id:'1',
-                name:"毕业要求1",
-                desc:"这个毕业要求1描述只这样的"
-            },{
-                id:'2',
-                name:"毕业要求2",
-                desc:"这个毕业要求1描述只这样的"
-            }],
-            teacherList:[{
-                id:'01',
-                name:'孙骁骁'
-            },{
-                id:'02',
-                name:'赵yiyi'
-            }]
-
+            indexPointList:[],
+            courseList:[],
+            requirementId:"",
+            requirementName:'',
+            requirementDesc:'',
+            requirementList:[],
+            teacherList:[],
+            modal:{
+                title:'添加指标点',
+                show:false,
+                loading:true
+            },
+            selectIndexPoint:{
+                indexPointId:'',
+                point:'',
+                name:'',
+                supportFactor:0.0,
+                supportDegree:'H'
+            }
         },
         methods:{
-            indexPointIdChange(){
-                for(var i=0;i<this.indexPointList.length;i++){
-                    if(this.indexPointList[i].id==this.indexPointId){
-                        this.indexPoint=this.indexPointList[i].indexPoint;
-                        this.indexPointDesc=this.indexPointList[i].description;
-                    }
-                }
+            modalStart(){
+                this.modal.show=true;
             },
+            refreshRequirementList(){
+                //先获取指标要求的List
+                ajaxGet("/system/professor/getList",function (d) {
+
+                    app.requirementList=d.data.list;
+                },null,false,false);
+
+            },
+            refreshIndexPointList(){
+                //根据年份和毕业要求id获取指标点的List
+                ajaxGet("/system/professor/getIndexPointByIndexRequirement?indexRequirementId="+this.requirementId
+                    +"&year="+this.formCourse.year,function (d) {
+                    app.indexPointList=d.data.list;
+                },null,false,false);
+
+            },
+            refreshTeacherList(){
+                //根据年份获取教师的list
+                ajaxGet("/system/management/getTeacherList?year="+this.formCourse.year,function (d) {
+                    app.teacherList=d.data.list;
+                },null,false,false);
+
+            },
+            refreshCourseList(){
+                //根据指标点id和年份获取课程的List
+                ajaxGet("/system/professor/getCourseListByIndexPointId?year="+this.formCourse.year+"&indexPointId="+this.indexPointId,function (d) {
+                    app.courseList=d.data.list;
+                },null,false,false);
+
+            },
+            //指标点改变的时候
+            indexPointIdChange(key){
+                //this.indexPointId=id;
+                this.selectIndexPoint.point=key;
+                this.refreshCourseList();
+            },
+            //毕业要求的改变的时候
             requirementIdChange(){
-                for(var i=0;i<this.requirementList.length;i++){
-                    if(this.requirementList[i].id==this.requirementId){
-                        //此处获取后台的对应的毕业要求的指标点
+                //this.requirementId=id;
+                this.refreshIndexPointList();
+            },
+            //年份的改变
+            yearChange(year){
+
+                this.formCourse.year=year;
+                this.refreshTeacherList();
+            },
+            submit(){
+
+                //保存当前修改的课程的指标点
+//                ajaxPostJSON("/system/professor/updateCourseIndexPointRelated",{courseList:this.courseList},function (d) {
+//                    app.$Modal.success({
+//                        title: "保存成功",
+//                    });
+//                },function (d) {
+//                    app.$Modal.error({
+//                        title: "保存失败",
+//                    });
+//                },false,false);
+//
+//                ajaxPostJSON("/system/professor/updateCourseIndexPointRelated",{courseList:this.courseList},function (d) {
+//                    app.$Modal.success({
+//                        title: "保存成功",
+//                    });
+//                },function (d) {
+//                    app.$Modal.error({
+//                        title: "保存失败",
+//                    });
+//                },false,false);
+
+                console.log(this.formCourse.selectTeacherList);
+
+            },
+            modal_ok(){
+                this.selectIndexPoint.indexPointId=this.indexPointId;
+                for(var i=0;i<this.indexPointList.length;i++){
+                    if(this.indexPointId==this.indexPointList[i].id){
+                        this.selectIndexPoint.point=this.indexPointList[i].point;
+                        break;
+                    }
+                }
+                //将选择的指标点接上去
+                this.formCourse.selectIndexPointList.push({
+                    indexPointId:this.selectIndexPoint.indexPointId,
+                    point:this.selectIndexPoint.point,
+                    name:'',
+                    supportFactor:this.selectIndexPoint.supportFactor,
+                    supportDegree:this.selectIndexPoint.supportDegree
+                });
+
+                this.modal.show=false;
+            },
+            delete_item(id){
+                console.log(id);
+                for(var i=0;i<this.formCourse.selectIndexPointList.length;i++){
+                    if(id==this.formCourse.selectIndexPointList[i].indexPointId){
+                        this.formCourse.selectIndexPointList.splice(i,1);
                     }
                 }
             },
-            yearChange(){
-                //此处获取相应年份的老师
-            },
+
             allCourse(){
                 window.location.href='/system/professor/allCourse';
             }
         },
+        mounted(){
+            this.refreshRequirementList();
+        }
     })
 
 </script>

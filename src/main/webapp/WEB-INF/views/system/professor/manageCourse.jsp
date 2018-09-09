@@ -195,10 +195,10 @@
 
                 console.log(this.list.length);
                 for (var i = 0; i < this.list.length; i++) {
-                ajaxGet("/system/professor/getCourseName?courseId=" + this.list[i].courseId, function (d) {
-                    app.list[i].courseId = d.data.courseName;
-                    console(d.data.courseName);
-                }, null, true, false);
+                    ajaxGet("/system/professor/getCourseName?courseId=" + this.list[i].courseId, function (d) {
+                        app.list[i].courseId = d.data.courseName;
+                        console(d.data.courseName);
+                    }, null, true, false);
                 }
             },
 
