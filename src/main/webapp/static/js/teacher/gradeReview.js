@@ -2,6 +2,8 @@ var date = new Date();
 
 var year = date.getFullYear();
 
+
+
 var test = new Vue({
     el:"#test",
     data:{
@@ -9,22 +11,7 @@ var test = new Vue({
             number: '',
             name: '',
             value: year.valueOf().toString(),
-            options: [{
-                value: '选项1',
-                label: '黄金糕'
-            }, {
-                value: '选项2',
-                label: '双皮奶'
-            }, {
-                value: '选项3',
-                label: '蚵仔煎'
-            }, {
-                value: '选项4',
-                label: '龙须面'
-            }, {
-                value: '选项5',
-                label: '北京烤鸭'
-            }],
+            options: []
         },
         header2:["A","B", "C"],
         data_list2:[
@@ -38,8 +25,73 @@ var test = new Vue({
         ]
     },
     methods: {
-        onSubmit() {
-            console.log('submit!');
+        onSubmit(formInline) {
+            $.ajax({
+                type:"get",
+                url:"/teacher/check",
+                contentType : 'application/json; charset=utf-8',
+                dataType : 'json',
+                data:{"year":this.formInline.value,"id":this.formInline.value1,"name":this.formInline.name,"number":this.formInline.number},
+                success: function (data) {
+                    console.log(133)
+                },
+                error:function (d) {
+                    // alert("error6");
+                }
+            })
+        },
+        change(formInline){
+            var subject = new Array();
+            console.log(this.formInline.value)
+            $.ajax({
+                type:"get",
+                url:"/teacher/change",
+                contentType : 'application/json; charset=utf-8',
+                dataType : 'json',
+                data:{"year":this.formInline.value},
+                success: function (result) {
+                    var data = [];
+                    for (let i = 0; i < result.length; i++) {
+
+                        var obj = {}
+                        obj.value = result[i].id;
+                        obj.label = result[i].name;
+                        data[i] = obj
+                    }
+                    test.formInline.options = data;
+                },
+                error:function (d) {
+                    alert(d)
+                }
+            })
+        },
+        start(){
+            var subject = new Array();
+            $.ajax({
+                type: 'POST',
+                url: "/teacher/initialization",
+                contentType : 'application/json; charset=utf-8',
+                dataType : 'json',
+                success: function (result) {
+                    var data = [];
+                    for (let i = 0; i < result.length; i++) {
+
+                        var obj = {}
+                        obj.value = result[i].id;
+                        obj.label = result[i].name;
+                        data[i] = obj
+                    }
+                   test.formInline.options = data;
+                },
+                error:function (d) {
+                    alert(d)
+                }
+            });
         }
+    },
+    mounted(){
+        this.start()
     }
+
 })
+
