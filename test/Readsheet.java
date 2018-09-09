@@ -1,4 +1,6 @@
 import com.utils.GuidUtil;
+import com.utils.PinYinUtil;
+import com.utils.TakeFilePathAndName;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -44,9 +46,11 @@ public class Readsheet {
          * Student 和 StudentScore表的插入
          */
 
-        insertStudent_Score("excel\\2009~2011学年-应用系统开发实践成绩-赵小林.xlsx");
-
-
+        List<String> fileName = TakeFilePathAndName.getFile("D:\\workplace\\IDEA\\ECIPCSweb\\excel\\grade");
+        for (String pathname:fileName
+             ) {
+            insertStudent_Score("excel\\grade\\"+pathname);
+        }
     }
 
     public static void insertCourse(String pathname) throws Exception
@@ -200,10 +204,24 @@ public class Readsheet {
 
         //年份
         List<String> years = new ArrayList<>();
-        years.add(pathname.substring(6,10));
-        years.add(pathname.substring(11,15));
+        years.add(pathname.substring(12,16));
+        years.add(pathname.substring(17,21));
         int yearStart = Integer.parseInt(years.get(0));
         int yearEnd = Integer.parseInt(years.get(1));
+
+        //拆分文件名，获取信息
+        String delimeter = "-";//分隔符是空格
+        //课程名
+        String coursename = pathname.split(delimeter)[1];
+
+        //教师姓名
+        String[] sArray = pathname.split(delimeter)[2].split("\\.");
+        String name = sArray[0];
+        String username = PinYinUtil.getCharPinYinString(sArray[0])[0];
+
+        for (int y=yearStart;y<yearEnd;y++)
+        {
+            System.out.println("INSERT INTO Teacher(id,username,password,name,phone,year) Values(\""+GuidUtil.getGuid()+"\",\""+username+"\",\"123456\",\""+name+"\",\"\",\""+y+"\");");}
 
         for(int y=yearStart,k=1;y<yearEnd;y++,k+=2) {
             XSSFSheet sheet = workbook.getSheetAt(k);
@@ -244,7 +262,7 @@ public class Readsheet {
                 for (int j= 3;j<row.getLastCellNum();j++) {
                     cell = row.getCell(j);
                     String scoreid = GuidUtil.getGuid();    //再次随机生成StudentScore表id
-                 System.out.println("INSERT INTO StudentScore(id,courseId,studentId,teacherId,indexPointId,columName,score,fullScore) SELECT\"" + scoreid + "\",C.id,S.id,T.id,I.id,\"" + columName.get(j) + "\"," +cell.getNumericCellValue()+","+sheet.getRow(2).getCell(j).getNumericCellValue()+" FROM Course C,Student S, Teacher T, IndexPoint I WHERE C.name=\"应用系统开发实践\" and C.year=\""+y+"\" and T.username=\"zhaoxiaolin\" and T.year=\""+y+"\" and I.point=\""+sheet.getRow(1).getCell(j).getNumericCellValue()+"\" and I.yearStart<=\""+y+"\" and I.yearEnd>\""+y+"\" and S.schoolNumber=\""+row.getCell(0).getStringCellValue()+"\";");
+                 System.out.println("INSERT INTO StudentScore(id,courseId,studentId,teacherId,indexPointId,columName,score,fullScore) SELECT\"" + scoreid + "\",C.id,S.id,T.id,I.id,\"" + columName.get(j) + "\"," +cell.getNumericCellValue()+","+sheet.getRow(2).getCell(j).getNumericCellValue()+" FROM Course C,Student S, Teacher T, IndexPoint I WHERE C.name=\""+coursename+"\" and C.year=\""+y+"\" and T.username=\"zhaoxiaolin\" and T.year=\""+y+"\" and I.point=\""+sheet.getRow(1).getCell(j).getNumericCellValue()+"\" and I.yearStart<=\""+y+"\" and I.yearEnd>\""+y+"\" and S.schoolNumber=\""+row.getCell(0).getStringCellValue()+"\";");
                 }
             }
         }
