@@ -6,8 +6,8 @@
 <mapper namespace="com.dao.TeacherDao">
 
     <insert id="addTeacher" parameterType="com.entity.Teacher">
-        INSERT INTO Teacher (id,username,password,phone,year)
-        VALUES (#{id},#{username},#{password},#{phone},#{year})
+        INSERT INTO Teacher (id,username,name,password,phone,year)
+        VALUES (#{id},#{username},#{name},#{password},#{phone},#{year})
     </insert>
 
     <update id="updateTeacher" parameterType="com.entity.Teacher">
@@ -21,9 +21,10 @@
             <if test="id!=null">
                 and id = #{id}
             </if>
-            <if  test="uearname!=null">
+            <if  test="username!=null">
                 and username = #{username}
             </if>
+
             <if test="name!=null">
                 and name = #{name}
             </if>

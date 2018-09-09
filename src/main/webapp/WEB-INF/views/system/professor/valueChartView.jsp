@@ -42,8 +42,8 @@
                 <p style="font-size: 30px;font-family: STXinwei;margin-top: 2px;color:navajowhite;float: left;">工程认证指标点计算系统</p>
 
                 <div style="float: right;margin-top: 2px; color:navajowhite">
-                    欢迎您！XXX&nbsp;&nbsp;
-                    <i-button size="small" type="info"><a href="/system/login/signIn">退出</a></i-button>
+                    欢迎您！${username}&nbsp;&nbsp;
+                    <i-button size="small" type="info"><a href="/system/login/returnLogin">退出</a></i-button>
                 </div>
             </i-header>
             <Layout>
